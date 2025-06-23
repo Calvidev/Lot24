@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Swiper CSS -->
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+/>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Seaglass Escape, Padre Island, TX </title>
@@ -110,6 +115,29 @@
       h1 { font-size: 2em; margin-bottom: 15px; }
       .text-content, .text-content .features { text-align: center; }
     }
+    <style>
+  .swiper {
+    width: 90%;
+    max-width: 600px;
+    height: 400px;
+    margin: 40px auto;
+  }
+
+  .swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+</style>
   </style>
 </head>
 <body>
@@ -170,7 +198,15 @@
       </model-viewer>
     </div>
   </div>
-
+<!-- Pool Renders -->
+  <div class="swiper cards-swiper">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide"><img src="images/pool1.jpg" alt="Pool Render 1" /></div>
+    <div class="swiper-slide"><img src="images/pool2.jpg" alt="Pool Render 2" /></div>
+    <div class="swiper-slide"><img src="images/pool3.jpg" alt="Pool Render 3" /></div>
+  </div>
+</div>
+  
   <!-- Map -->
   <div class="map-wrapper">
     <h2>Location</h2>
@@ -183,5 +219,17 @@
         style="border:0; border-radius: 12px;">
 </iframe>
   </div>
+  <!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+  const swiper = new Swiper(".cards-swiper", {
+    effect: "cards",
+    grabCursor: true,
+    cardsEffect: {
+      perSlideRotate: 4,
+      perSlideOffset: 10,
+    },
+  });
+</script>
 </body>
 </html>
