@@ -141,6 +141,33 @@
   color: #ffffff;
   text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
 }
+    .coverflow-swiper {
+  width: 90%;
+  max-width: 800px;
+  height: 400px;
+  margin: 60px auto;
+}
+
+.coverflow-swiper .swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.coverflow-swiper .swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.coverflow-prev,
+.coverflow-next {
+  color: white;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
 </style>
   
 </head>
@@ -214,6 +241,20 @@
     <div class="swiper-button-next"></div>
   </div>
 </div>
+  <!-- Additional Coverflow Slider -->
+<div class="swiper-container-wrapper">
+  <div class="swiper coverflow-swiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide"><img src="images/extra1.jpg" alt="Extra Render 1" /></div>
+      <div class="swiper-slide"><img src="images/extra2.jpg" alt="Extra Render 2" /></div>
+      <div class="swiper-slide"><img src="images/extra3.jpg" alt="Extra Render 3" /></div>
+    </div>
+
+    <!-- Arrows -->
+    <div class="swiper-button-prev coverflow-prev"></div>
+    <div class="swiper-button-next coverflow-next"></div>
+  </div>
+</div>
   
   <!-- Map -->
   <div class="map-wrapper">
@@ -242,6 +283,24 @@
       perSlideOffset: 10,
     },
   });
+
+  const coverflowSwiper = new Swiper(".coverflow-swiper", {
+  effect: "coverflow",
+  grabCursor: true,
+  centeredSlides: true,
+  slidesPerView: "auto",
+  coverflowEffect: {
+    rotate: 30,
+    stretch: 0,
+    depth: 100,
+    modifier: 1,
+    slideShadows: false,
+  },
+  navigation: {
+    nextEl: ".coverflow-next",
+    prevEl: ".coverflow-prev",
+  },
+});
 </script>
 </body>
 </html>
