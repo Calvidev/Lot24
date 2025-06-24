@@ -136,6 +136,10 @@
     height: 100%;
     object-fit: cover;
   }
+    .swiper-button-prev,
+.swiper-button-next {
+  color: #1d1d1f;
+}
 </style>
   
 </head>
@@ -204,6 +208,10 @@
     <div class="swiper-slide"><img src="Portside Phase 2 Design (dragged)_page-0001 (1).jpg" alt="Pool Render 2" /></div>
     <div class="swiper-slide"><img src="img5.jpg" alt="Pool Render 3" /></div>
   </div>
+    <!-- Arrows -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+  </div>
 </div>
   
   <!-- Map -->
@@ -224,6 +232,10 @@
   const swiper = new Swiper(".cards-swiper", {
     effect: "cards",
     grabCursor: true,
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
     cardsEffect: {
       perSlideRotate: 4,
       perSlideOffset: 10,
