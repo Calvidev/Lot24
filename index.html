@@ -168,6 +168,26 @@
   color: white;
   text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
 }
+
+    .slider-flex-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px;
+  flex-wrap: wrap; /* Optional: allows stacking on small screens */
+}
+
+.swiper-container-wrapper {
+  flex: 1;
+  min-width: 300px;
+  max-width: 48%;
+}
+
+.swiper-slide img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
 </style>
   
 </head>
@@ -242,38 +262,36 @@
   </div>
 </div> -->
   
-  <!-- Additional Coverflow Slider -->
-<div class="swiper-container-wrapper">
-  <div class="swiper coverflow-swiper">
-    <div class="swiper-wrapper">
-      <div class="swiper-slide"><img src="House Renders Webpage/Lot24 Render 1.jpg" alt="House Render 1" /></div>
-    <div class="swiper-slide"><img src="House Renders Webpage/Lot24 Render 2.png" alt="House Render 2" /></div>
-    <div class="swiper-slide"><img src="House Renders Webpage/Lot24 Render 3.png" alt="House Render 3" /></div>
-      <div class="swiper-slide"><img src="House Renders Webpage/Lot24 Render 4.jpg" alt="House Render 4" /></div>
-      <div class="swiper-slide"><img src="House Renders Webpage/Lot24 Render 5.png" alt="House Render 5" /></div>
-    </div> 
+  <!-- Container for both sliders -->
+<div class="slider-flex-container">
+  <!-- Slider 1 -->
+  <div class="swiper-container-wrapper">
+    <div class="swiper coverflow-swiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><img src="House Renders Webpage/Lot24 Render 1.jpg" alt="House Render 1" /></div>
+        <div class="swiper-slide"><img src="House Renders Webpage/Lot24 Render 2.png" alt="House Render 2" /></div>
+        <div class="swiper-slide"><img src="House Renders Webpage/Lot24 Render 3.png" alt="House Render 3" /></div>
+        <div class="swiper-slide"><img src="House Renders Webpage/Lot24 Render 4.jpg" alt="House Render 4" /></div>
+        <div class="swiper-slide"><img src="House Renders Webpage/Lot24 Render 5.png" alt="House Render 5" /></div>
+      </div>
+      <div class="swiper-button-prev coverflow-prev"></div>
+      <div class="swiper-button-next coverflow-next"></div>
+    </div>
+  </div>
 
-    <!-- Arrows -->
-    <div class="swiper-button-prev coverflow-prev"></div>
-    <div class="swiper-button-next coverflow-next"></div>
+  <!-- Slider 2 -->
+  <div class="swiper-container-wrapper">
+    <div class="swiper coverflow-swiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><img src="Portside Phase 2 Design (dragged)_page-0001.jpg" alt="Pool Render 1" /></div>
+        <div class="swiper-slide"><img src="Portside Phase 2 Design (dragged)_page-0001 (1).jpg" alt="Pool Render 2" /></div>
+        <div class="swiper-slide"><img src="img5.jpg" alt="Pool Render 3" /></div>
+      </div>
+      <div class="swiper-button-prev coverflow-prev"></div>
+      <div class="swiper-button-next coverflow-next"></div>
+    </div>
   </div>
 </div>
-
-  <!-- House Renders Coverflow Slider -->
-<div class="swiper-container-wrapper">
-  <div class="swiper coverflow-swiper">
-    <div class="swiper-wrapper">
-      <div class="swiper-slide"><img src="Portside Phase 2 Design (dragged)_page-0001.jpg" alt="Pool Render 1" /></div>
-    <div class="swiper-slide"><img src="Portside Phase 2 Design (dragged)_page-0001 (1).jpg" alt="Pool Render 2" /></div>
-    <div class="swiper-slide"><img src="img5.jpg" alt="Pool Render 3" /></div>
-    </div> 
-
-    <!-- House Renders Arrows -->
-    <div class="swiper-button-prev coverflow-prev"></div>
-    <div class="swiper-button-next coverflow-next"></div>
-  </div>
-</div>
-  
   <!-- Map -->
   <div class="map-wrapper">
     <h2>Location</h2>
