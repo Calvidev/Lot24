@@ -143,27 +143,31 @@
   color: #ffffff;
   text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
 }
-    ..coverflow-swiper {
+   .coverflow-swiper {
   width: 90%;
   max-width: 800px;
-  aspect-ratio: 16 / 9; /* or try 3 / 4 or any ratio that matches your images */
+  aspect-ratio: 16 / 9;
   margin: 60px auto;
   position: relative;
 }
 
 .coverflow-swiper .swiper-slide {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 12px;
+  aspect-ratio: 16 / 9; /* or 4 / 3, 3 / 2 — depending on your target shape */
+  width: 100%;
+  position: relative;
   overflow: hidden;
+  border-radius: 12px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .coverflow-swiper .swiper-slide img {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
+  border-radius: 0; /* or keep 12px if you want rounded corners inside too */
 }
 
 .coverflow-prev,
