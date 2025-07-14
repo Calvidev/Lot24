@@ -12,6 +12,40 @@
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <style>
+    .top-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background-color: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-logo img {
+      height: 48px;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-links li a {
+      text-decoration: none;
+      color: #1d1d1f;
+      font-weight: 500;
+      font-size: 1rem;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links li a:hover {
+      color: #0077b6;
+    }
     /* Reset & Base */
     * {
       margin: 0;
@@ -81,7 +115,7 @@
     }
 
     /* Logo & Title */
-    .logo-row {
+    /*.logo-row {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -102,7 +136,7 @@
     h2 {
       font-weight: 500;
       margin-bottom: 20px;
-    }
+    } */
 
     /* Text + Icons */
     .text-content p {
@@ -356,6 +390,20 @@
   </style>
 </head>
 <body>
+  <header class="top-nav">
+    <div class="nav-logo">
+      <img src="Assests/Logo/Seaglass Logo.png" alt="Seaglass Escape Logo" />
+    </div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#location">Location</a></li>
+        <li><a href="#booking">Booking</a></li>
+      </ul>
+    </nav>
+  </header>
   <div class="container">
     <div class="left">
       <div class="logo-row">
