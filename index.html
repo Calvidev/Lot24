@@ -67,6 +67,12 @@
       width: auto;
     }
 
+    .morph-logo {
+      display: none;
+      height: 50px;
+      transition: opacity 0.4s ease;
+    }
+
     @media (max-width: 768px) {
       .desktop-logo {
         display: none;
@@ -74,6 +80,15 @@
       .mobile-logo {
         display: block;
       }
+    }
+
+    .top-nav.shrink .desktop-logo,
+    .top-nav.shrink .mobile-logo {
+      display: none;
+    }
+
+    .top-nav.shrink .morph-logo {
+      display: block;
     }
 
     .nav-links {
@@ -480,6 +495,7 @@
       <img class="logo-icon desktop-logo" src="Assets/Logo/Seaglass Icon.png" alt="Seaglass Escape Icon" />
       <img class="logo-text desktop-logo" src="Assets/Logo/Seaglass2 text.png" alt="Seaglass Escape Text" />
       <img class="mobile-logo" src="Assets/Logo/Seaglass2.png" alt="Seaglass Escape Mobile Logo" />
+      <img class="morph-logo" src="Assets/Logo/Seaglass-Morph.png" alt="Seaglass Escape Morph Logo" />
     </div>
     <div class="hamburger" onclick="toggleMenu()">☰</div>
     <nav>
