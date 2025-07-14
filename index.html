@@ -15,7 +15,7 @@
     .top-nav {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
       padding: 1rem 2rem;
       background-color: rgba(255, 255, 255, 0.7);
       backdrop-filter: blur(10px);
@@ -50,6 +50,8 @@
       display: flex;
       align-items: center;
       gap: 12px;
+      margin-left: auto;
+      margin-right: auto;
     }
     .nav-logo .logo-icon {
       height: 80px;
@@ -461,7 +463,11 @@
       }
 
       .hamburger {
-        display: block;
+        display: none;
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
       }
     }
   </style>
