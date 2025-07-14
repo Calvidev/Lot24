@@ -420,6 +420,36 @@
         margin-top: 30px;
       }
     }
+
+    .hamburger {
+      display: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        background-color: rgba(255, 255, 255, 0.95);
+        position: absolute;
+        top: 56px;
+        right: 20px;
+        width: 180px;
+        padding: 1rem;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        z-index: 999;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .hamburger {
+        display: block;
+      }
+    }
   </style>
 </head>
 <body>
@@ -428,6 +458,7 @@
       <img class="logo-icon" src="Assets/Logo/Seaglass Icon.png" alt="Seaglass Escape Icon" />
       <img class="logo-text" src="Assets/Logo/Seaglass2 text.png" alt="Seaglass Escape Text" />
     </div>
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
     <nav>
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
@@ -572,7 +603,6 @@
     ></iframe>
   </div>
 
-  <!-- Swiper JS -->
 </script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
@@ -624,6 +654,12 @@
 
       lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
     });
+  </script>
+  <script>
+    function toggleMenu() {
+      const navLinks = document.querySelector('.nav-links');
+      navLinks.classList.toggle('active');
+    }
   </script>
 </body>
 </html>
