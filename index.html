@@ -27,6 +27,14 @@
       transform: translateY(0);
     }
 
+    /* Collapsed navbar state */
+    .top-nav.shrink .logo-text {
+      display: none;
+    }
+    .top-nav.shrink .logo-icon {
+      height: 50px;
+    }
+
     .nav-logo {
       display: flex;
       align-items: center;
@@ -597,10 +605,10 @@
 
       if (scrollTop > lastScrollTop) {
         // Scrolling down
-        navbar.style.transform = 'translateY(-100%)';
+        navbar.classList.add('shrink');
       } else {
         // Scrolling up
-        navbar.style.transform = 'translateY(0)';
+        navbar.classList.remove('shrink');
       }
 
       lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
