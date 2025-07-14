@@ -59,6 +59,19 @@
       height: 100px;
       width: auto;
     }
+    .mobile-logo {
+      display: none;
+      height: 60px;
+    }
+
+    @media (max-width: 768px) {
+      .desktop-logo {
+        display: none;
+      }
+      .mobile-logo {
+        display: block;
+      }
+    }
 
     .nav-links {
       list-style: none;
@@ -455,8 +468,9 @@
 <body>
   <header class="top-nav">
     <div class="nav-logo">
-      <img class="logo-icon" src="Assets/Logo/Seaglass Icon.png" alt="Seaglass Escape Icon" />
-      <img class="logo-text" src="Assets/Logo/Seaglass2 text.png" alt="Seaglass Escape Text" />
+      <img class="logo-icon desktop-logo" src="Assets/Logo/Seaglass Icon.png" alt="Seaglass Escape Icon" />
+      <img class="logo-text desktop-logo" src="Assets/Logo/Seaglass2 text.png" alt="Seaglass Escape Text" />
+      <img class="mobile-logo" src="Assets/Logo/Seaglass2.png" alt="Seaglass Escape Mobile Logo" />
     </div>
     <div class="hamburger" onclick="toggleMenu()">☰</div>
     <nav>
@@ -603,7 +617,6 @@
     ></iframe>
   </div>
 
-</script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
     const swiper = new Swiper(".cards-swiper", {
