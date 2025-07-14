@@ -109,11 +109,6 @@
       .model-desktop model-viewer { height: 100%; }
     }
 
-    body {
-    background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb') no-repeat center center fixed;
-    background-size: cover;
-  }
-
   .glass-card {
     backdrop-filter: blur(10px);
     background: rgba(255, 255, 255, 0.2);
@@ -125,6 +120,39 @@
     margin: 100px auto;
     text-align: center;
   }
+
+  .glass-container {
+  max-width: 800px;
+  margin: 5% auto;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: white;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.features {
+  display: flex;
+  gap: 2rem;
+  justify-content: space-between;
+  margin: 1rem 0;
+}
+
+.feature {
+  text-align: center;
+}
+
+.icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.label {
+  font-size: 1rem;
+}
   /* =====================================
    🔵 SLIDER STYLES (Swiper & Coverflow)
 ===================================== */
@@ -344,6 +372,7 @@
       </div>
 
       <!-- Text + Icons inserted mid-flow -->
+      <div class="glass-container"></div>
       <div class="text-content">
         <p>Experience luxury costal living with this modern 10-guest property, located walking distance from Whitecap Beach. Ideal for short-term rentals or year-round relaxation.</p>
 
