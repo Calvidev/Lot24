@@ -14,122 +14,95 @@
   <style>
     .top-nav {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
-      padding: 1rem 2rem;
-      background-color: rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(10px);
-      position: sticky;
+      padding: 1.2rem 2rem;
+      position: fixed;
+      width: 100%;
       top: 0;
+      background: transparent;
       z-index: 1000;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease, padding 0.3s ease;
-      transform: translateY(0);
-      height: 100px;
-    }
-    .logo-text, .logo-icon {
-      transition: all 0.4s ease-in-out;
+      transition: background 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
     }
 
-    /* Collapsed navbar state with morph animation */
-    .top-nav.shrink .logo-text {
-      transform: scale(0.7);
-      opacity: 0;
-      pointer-events: none;
-    }
-    .top-nav.shrink .logo-icon {
-      height: 50px;
-    }
     .top-nav.shrink {
-      padding: 0.1rem 1rem;
-      height: 56px;
-      transition: padding 0.4s cubic-bezier(0.4,0,0.2,1), height 0.4s ease-in-out;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 0.6rem 2rem;
     }
 
     .nav-logo {
-      position: relative;
+      flex: 1;
+      text-align: center;
     }
 
-    .desktop-logo,
-    .mobile-logo,
-    .morph-logo {
-      display: none;
-      transition: opacity 0.3s ease;
+    .nav-left,
+    .nav-right {
+      flex: 1;
     }
 
-    .top-nav .desktop-logo {
-      display: inline;
+    .nav-left {
+      text-align: left;
     }
-
-    @media (max-width: 768px) {
-      .top-nav .desktop-logo {
-        display: none;
-      }
-      .top-nav .mobile-logo {
-        display: inline;
-      }
-    }
-
-    .top-nav.shrink .desktop-logo,
-    .top-nav.shrink .mobile-logo {
-      display: none;
-    }
-
-    .top-nav.shrink .morph-logo {
-      display: inline;
-    }
-
-    .nav-logo .logo-icon {
-      height: 80px;
-      width: auto;
-    }
-    .nav-logo .logo-text {
-      height: 100px;
-      width: auto;
-    }
-    .mobile-logo {
-      height: 200px;
-      width: auto;
-    }
-    .morph-logo {
-      height: 50px;
-      transition: opacity 0.3s ease;
-    }
-
-    @media (max-width: 768px) {
-      .desktop-logo {
-        display: none;
-      }
-      .mobile-logo {
-        display: block;
-      }
-    }
-
-    .top-nav.shrink .desktop-logo,
-    .top-nav.shrink .mobile-logo {
-      opacity: 0;
-    }
-
-    .top-nav.shrink .morph-logo {
-      opacity: 1;
+    .nav-right {
+      text-align: right;
     }
 
     .nav-links {
       list-style: none;
       display: flex;
       gap: 1.5rem;
+      padding: 0;
+      margin: 0;
     }
 
     .nav-links li a {
       text-decoration: none;
       color: #1d1d1f;
       font-weight: 500;
-      font-size: 1rem;
-      transition: color 0.4s ease;
+      transition: color 0.3s ease;
     }
 
     .nav-links li a:hover {
       color: #0077b6;
+    }
+
+    .main-logo {
+      height: 80px;
+      transition: height 0.3s ease;
+    }
+
+    .top-nav.shrink .main-logo {
+      height: 50px;
+    }
+
+    @media (max-width: 768px) {
+      .nav-left,
+      .nav-right {
+        display: none;
+      }
+
+      .hamburger {
+        display: block;
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.8rem;
+        cursor: pointer;
+      }
+
+      .nav-links.active {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 70px;
+        right: 20px;
+        background: white;
+        padding: 1rem;
+        border-radius: 8px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      }
     }
     /* Reset & Base */
     * {
@@ -514,22 +487,26 @@
 </head>
 <body>
   <header class="top-nav">
-    <div class="nav-logo">
-      <img class="logo-icon desktop-logo" src="Assets/Logo/Seaglass Icon.png" alt="Seaglass Escape Icon" />
-      <img class="logo-text desktop-logo" src="Assets/Logo/Seaglass2 text.png" alt="Seaglass Escape Text" />
-      <img class="mobile-logo" src="Assets/Logo/Seaglass2.png" alt="Seaglass Escape Mobile Logo" />
-      <img class="morph-logo" src="Assets/Logo/Seaglass Icon.png" alt="Seaglass Escape Morph Logo" />
-    </div>
-    <div class="hamburger" onclick="toggleMenu()">☰</div>
-    <nav>
+    <nav class="nav-left">
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#features">Features</a></li>
         <li><a href="#gallery">Gallery</a></li>
+      </ul>
+    </nav>
+
+    <div class="nav-logo">
+      <img class="main-logo" src="Assets/Logo/Seaglass2 text.png" alt="Seaglass Escape Logo" />
+    </div>
+
+    <nav class="nav-right">
+      <ul class="nav-links">
         <li><a href="#location">Location</a></li>
         <li><a href="#booking">Booking</a></li>
       </ul>
     </nav>
+
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
   </header>
 
   <div class="container">
