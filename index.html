@@ -50,20 +50,33 @@
       position: relative;
     }
 
-    .morph-logo,
     .desktop-logo,
-    .mobile-logo {
-      position: absolute;
-      top: 0;
-      left: 0;
-      opacity: 0;
+    .mobile-logo,
+    .morph-logo {
+      display: none;
       transition: opacity 0.3s ease;
     }
 
-    .desktop-logo,
-    .mobile-logo {
-      position: relative;
-      opacity: 1;
+    .top-nav .desktop-logo {
+      display: inline;
+    }
+
+    @media (max-width: 768px) {
+      .top-nav .desktop-logo {
+        display: none;
+      }
+      .top-nav .mobile-logo {
+        display: inline;
+      }
+    }
+
+    .top-nav.shrink .desktop-logo,
+    .top-nav.shrink .mobile-logo {
+      display: none;
+    }
+
+    .top-nav.shrink .morph-logo {
+      display: inline;
     }
 
     .nav-logo .logo-icon {
