@@ -2,28 +2,26 @@
 <html lang="en">
 <head>
   <!-- Swiper CSS -->
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-/>
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+  />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Seaglass Escape, Padre Island, TX </title>
+  <title>Seaglass Escape, Padre Island, TX</title>
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <style>
-    .logo-row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 40px;
-  margin-bottom: 20px;
-}
     /* Reset & Base */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: #C8B884;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+        Arial, sans-serif;
+      background-color: #c8b884;
       background: url("Assests/Background/TexasCoast.jpg") no-repeat center center fixed;
       background-size: cover;
       color: #1d1d1f;
@@ -39,10 +37,57 @@
       padding: 60px 20px;
       gap: 40px;
     }
-    .left { flex: 1; }
-    .right { flex: 1; height: 600px; }
+    .left {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .right {
+      flex: 1;
+      height: 600px;
+    }
+
+    /* Glass Card */
+    .glass-card {
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 2rem;
+      color: white;
+      max-width: 300px;
+      margin: 100px auto;
+      text-align: center;
+    }
+
+    /* Glass Container */
+    .glass-container {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 2rem;
+      margin: 3rem auto;
+      max-width: 800px;
+      color: #1d1d1f;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
 
     /* Logo & Title */
+    .logo-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      margin-bottom: 20px;
+    }
     .logo {
       width: 140px;
       display: block;
@@ -54,21 +99,24 @@
       text-align: center;
       margin-bottom: 20px;
     }
+    h2 {
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
 
     /* Text + Icons */
     .text-content p {
       font-size: 1.1em;
       margin-bottom: 20px;
     }
-    .text-content .features {
+    .features {
       display: flex;
       justify-content: center;
       gap: 40px;
       flex-wrap: wrap;
-      margin: 20px auto; /* vertical spacing */
-      max-width: 500px;  /* so they don’t stretch too wide */
+      margin: 20px auto;
+      max-width: 500px;
     }
-
     .feature {
       background: #fff;
       padding: 20px;
@@ -79,24 +127,48 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
       text-align: center;
+      color: #1d1d1f;
     }
-    .feature .icon { font-size: 1.6em; margin-bottom: 6px; }
-    .feature .label { font-size: .75em; line-height: 1.2; }
+    .feature .icon {
+      font-size: 1.6em;
+      margin-bottom: 6px;
+    }
+    .feature .label {
+      font-size: 0.75em;
+      line-height: 1.2;
+    }
 
     /* model-viewer */
-    model-viewer { width: 100%; display: block; }
-    .model-mobile model-viewer { height: 300px; margin: 20px 0; }
-    .model-desktop { display: none; }
+    model-viewer {
+      width: 100%;
+      display: block;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+    .model-mobile model-viewer {
+      height: 300px;
+      margin: 20px 0;
+    }
+    .model-desktop {
+      display: none;
+    }
 
     /* Map */
     .map-wrapper {
       background: #fff;
       padding: 60px 20px;
       text-align: center;
+      max-width: 1200px;
+      margin: 0 auto 60px auto;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
     }
-    .map-wrapper h2 { font-size: 1.5em; margin-bottom: 20px; }
+    .map-wrapper h2 {
+      font-size: 1.5em;
+      margin-bottom: 20px;
+    }
     iframe {
       width: 100%;
       height: 450px;
@@ -104,286 +176,222 @@
       border-radius: 12px;
     }
 
-    /* Desktop vs Mobile */
-    @media (min-width: 769px) {
-      .model-mobile { display: none; }
-      .model-desktop { display: block; }
-      .model-desktop model-viewer { height: 100%; }
+    /* Slider container */
+    .slider-flex-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto 60px auto;
+      flex-wrap: wrap;
+    }
+    .slider-section {
+      max-width: 48%;
+      text-align: center;
+    }
+    .slider-title {
+      font-size: 1.25rem;
+      margin-bottom: 10px;
+      margin-top: 30px;
+    }
+    .swiper-container-wrapper {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
     }
 
-  .glass-card {
-    backdrop-filter: blur(10px);
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 2rem;
-    color: white;
-    max-width: 300px;
-    margin: 100px auto;
-    text-align: center;
-  }
+    /* Swiper styles */
+    .swiper {
+      width: 100%;
+      height: 400px;
+      margin: 40px auto;
+    }
+    .swiper-slide {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      aspect-ratio: 16 / 9;
+    }
+    .swiper-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+    .swiper-button-prev,
+    .swiper-button-next {
+      color: #ffffff;
+      text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+    }
 
-  .glass-container {
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 16px;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 2rem;
-    margin: 3rem auto;
-    max-width: 800px;
-    color: #1d1d1f;
-    text-align: center;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-    min-height: 600px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
+    .coverflow-swiper {
+      width: 100%;
+      max-width: 100%;
+      aspect-ratio: 16 / 9;
+      margin-bottom: 40px;
+    }
+    .coverflow-swiper .swiper-slide {
+      aspect-ratio: 16 / 9;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    .coverflow-swiper .swiper-slide img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 0;
+    }
+    .coverflow-prev,
+    .coverflow-next {
+      color: white;
+      text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+    }
 
-.features {
-  display: flex;
-  gap: 2rem;
-  justify-content: space-between;
-  margin: 1rem 0;
-}
-
-.feature {
-  text-align: center;
-}
-
-.icon {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-}
-
-.label {
-  font-size: 1rem;
-}
-  /* =====================================
-   🔵 SLIDER STYLES (Swiper & Coverflow)
-===================================== */
-
-.swiper {
-  width: 90%;
-  max-width: 600px;
-  height: 400px;
-  margin: 40px auto;
-}
-
-.swiper-slide {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  aspect-ratio: 16 / 9;
-}
-
-.swiper-slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 12px;
-}
-
-.swiper-button-prev,
-.swiper-button-next {
-  color: #ffffff;
-  text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
-}
-
-.coverflow-swiper {
-  width: 100%;
-  max-width: 100%;
-  aspect-ratio: 16 / 9;
-  margin-bottom: 40px;
-}
-
-.coverflow-swiper .swiper-slide {
-  aspect-ratio: 16 / 9;
-  width: 100%;
-  position: relative;
-  overflow: hidden;
-  border-radius: 12px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-}
-
-.coverflow-swiper .swiper-slide img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 0;
-}
-
-.coverflow-prev,
-.coverflow-next {
-  color: white;
-  text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
-}
-
-.slider-flex-container {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  padding: 20px;
-  flex-wrap: wrap;
-}
-
-.slider-section {
-  max-width: 90%;
-  text-align: center;
-}
-
-.slider-title {
-  font-size: 1.25rem;
-  margin-bottom: 10px;
-  margin-top: 30px;
-}
-
-.swiper-container-wrapper {
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-/* =====================================
-   🔸 RESPONSIVE STYLES (Mobile)
-===================================== */
-
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-    padding: 30px 20px;
-  }
-
-  .right {
-    display: none;
-  }
-
-  .logo {
-    width: 100px;
-    margin-bottom: 10px;
-  }
-
-  h1 {
-    font-size: 2em;
-    margin-bottom: 15px;
-  }
-
-  .text-content,
-  .text-content .features {
-    text-align: center;
-  }
-
-  .slider-flex-container {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .slider-section {
-    max-width: 90%;
-    text-align: center;
-  }
-
-  .coverflow-swiper {
-    width: 100%;
-    max-width: 100%;
-    aspect-ratio: 16 / 9;
-    margin-bottom: 40px;
-  }
-
-  .swiper-slide {
-  width: 100%;
-  padding-top: 56.25%; /* 16:9 ratio (9/16 = 0.5625) */
-  position: relative;
-  overflow: hidden;
-  border-radius: 12px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-}
-
-  .swiper-slide img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 12px;
-}
-
-  .slider-title {
-    font-size: 1.25rem;
-    margin-bottom: 10px;
-    margin-top: 30px;
-  }
-}
+    /* Desktop vs Mobile */
     @media (min-width: 769px) {
-  .slider-flex-container {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
+      .model-mobile {
+        display: none;
+      }
+      .model-desktop {
+        display: block;
+      }
+      .model-desktop model-viewer {
+        height: 100%;
+      }
+      .slider-flex-container {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+      .slider-section {
+        flex: 1;
+        max-width: 48%;
+      }
+      .coverflow-swiper {
+        aspect-ratio: 16 / 9;
+        width: 100%;
+        max-width: 100%;
+      }
+      .swiper-slide {
+        aspect-ratio: 16 / 9;
+      }
+      .swiper-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 12px;
+      }
+    }
 
-  .slider-section {
-    flex: 1;
-    max-width: 48%;
-  }
-
-  .coverflow-swiper {
-    aspect-ratio: 16 / 9;
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .swiper-slide {
-    aspect-ratio: 16 / 9;
-  }
-
-  .swiper-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 12px;
-  }
-}
-</style>
-  
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        padding: 30px 20px;
+      }
+      .right {
+        display: none;
+      }
+      .logo {
+        width: 100px;
+        margin-bottom: 10px;
+      }
+      h1 {
+        font-size: 2em;
+        margin-bottom: 15px;
+      }
+      .text-content,
+      .text-content .features {
+        text-align: center;
+      }
+      .slider-flex-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      .slider-section {
+        max-width: 90%;
+        text-align: center;
+      }
+      .coverflow-swiper {
+        width: 100%;
+        max-width: 100%;
+        aspect-ratio: 16 / 9;
+        margin-bottom: 40px;
+      }
+      .swiper-slide {
+        width: 100%;
+        padding-top: 56.25%; /* 16:9 ratio */
+        position: relative;
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      }
+      .swiper-slide img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 12px;
+      }
+      .slider-title {
+        font-size: 1.25rem;
+        margin-bottom: 10px;
+        margin-top: 30px;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="container">
     <div class="left">
       <div class="logo-row">
-        <img src="Assests/Logo/Portside_Logo_Blue2t.png" alt="Portside logo" class="logo">
-        <img src="Assests/Logo/Seaglass Logo.png" alt="Seaglass logo" class="logo">
+        <img src="Assests/Logo/Portside_Logo_Blue2t.png" alt="Portside logo" class="logo" />
+        <img src="Assests/Logo/Seaglass Logo.png" alt="Seaglass logo" class="logo" />
       </div>
-      <div class="glass-container">    
+      <div class="glass-container">
         <h1>Seaglass Escape</h1>
         <h2>Padre Island, TX</h2>
-
-        <p>Experience luxury coastal living with this modern 10-guest property, located walking distance from Whitecap Beach. Ideal for short-term rentals or year-round relaxation.</p>
-
-        <div class="features">
-          <div class="feature">
-            <div class="icon">🛁</div>
-            <div class="label">3.5 Baths</div>
+        <div class="text-content">
+          <p>
+            Experience luxury coastal living with this modern 10-guest property,
+            located walking distance from Whitecap Beach. Ideal for short-term
+            rentals or year-round relaxation.
+          </p>
+          <div class="features">
+            <div class="feature">
+              <div class="icon">🛁</div>
+              <div class="label">3.5 Baths</div>
+            </div>
+            <div class="feature">
+              <div class="icon">🛏️</div>
+              <div class="label">3 Bedrooms</div>
+            </div>
+            <div class="feature">
+              <div class="icon">📐</div>
+              <div class="label">1,400 sqft</div>
+            </div>
           </div>
-          <div class="feature">
-            <div class="icon">🛏️</div>
-            <div class="label">3 Bedrooms</div>
-          </div>
-          <div class="feature">
-            <div class="icon">📐</div>
-            <div class="label">1,400 sqft</div>
-          </div>
+          <p>
+            Features include high ceilings, open-concept living spaces, and
+            breathtaking views. Explore the model to see the home's exterior in
+            3D.
+          </p>
+          <p>Scroll down to learn more about nearby attractions, pricing, and availability.</p>
         </div>
-
-        <p>Features include high ceilings, open-concept living spaces, and breathtaking views. Explore the model to see the home's exterior in 3D.</p>
-        <p>Scroll down to learn more about nearby attractions, pricing, and availability.</p>
       </div>
 
       <!-- Mobile model -->
@@ -391,142 +399,133 @@
         <model-viewer
           src="Assests/Renders/HOUSE MODEL.glb"
           alt="3D House Model"
-          auto-rotate auto-rotate-delay="0"
-          camera-controls shadow-intensity="5"
+          auto-rotate
+          auto-rotate-delay="0"
+          camera-controls
+          shadow-intensity="5"
           touch-action="pan-y"
-          camera-orbit="20deg 75deg 100m">
-        </model-viewer>
+          camera-orbit="20deg 75deg 100m"
+        ></model-viewer>
       </div>
+    </div>
 
     <!-- Desktop model -->
     <div class="right model-desktop">
       <model-viewer
         src="Assests/Renders/HOUSE MODEL.glb"
         alt="3D House Model"
-        auto-rotate auto-rotate-delay="0"
-        camera-controls shadow-intensity="5"
+        auto-rotate
+        auto-rotate-delay="0"
+        camera-controls
+        shadow-intensity="5"
         touch-action="pan-y"
-        camera-orbit="20deg 75deg 100m">
-      </model-viewer>
+        camera-orbit="20deg 75deg 100m"
+      ></model-viewer>
     </div>
   </div>
-  
-<div class="slider-flex-container">
 
-  <!-- First Slider + Title -->
-  <div class="slider-section">
-    <h2 class="slider-title">Lot 24 Exterior Renders</h2>
-    <div class="swiper-container-wrapper">
-      <div class="swiper coverflow-swiper">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide">
-            <div class="aspect-ratio-box">
+  <div class="slider-flex-container">
+    <!-- First Slider + Title -->
+    <div class="slider-section">
+      <h2 class="slider-title">Lot 24 Exterior Renders</h2>
+      <div class="swiper-container-wrapper">
+        <div class="swiper coverflow-swiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
               <img src="Assests/Renders/House Renders Webpage/Lot24 Render 1.jpg" alt="House Render 1" />
             </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="aspect-ratio-box">
+            <div class="swiper-slide">
               <img src="Assests/Renders/House Renders Webpage/Lot24 Render 2.png" alt="House Render 2" />
             </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="aspect-ratio-box">
+            <div class="swiper-slide">
               <img src="Assests/Renders/House Renders Webpage/Lot24 Render 3.png" alt="House Render 3" />
             </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="aspect-ratio-box">
+            <div class="swiper-slide">
               <img src="Assests/Renders/House Renders Webpage/Lot24 Render 4.jpg" alt="House Render 4" />
             </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="aspect-ratio-box">
+            <div class="swiper-slide">
               <img src="Assests/Renders/House Renders Webpage/Lot24 Render 5.png" alt="House Render 5" />
             </div>
           </div>
+          <div class="swiper-button-prev coverflow-prev"></div>
+          <div class="swiper-button-next coverflow-next"></div>
         </div>
-        <div class="swiper-button-prev coverflow-prev"></div>
-        <div class="swiper-button-next coverflow-next"></div>
       </div>
     </div>
-  </div>
 
-  <!-- Second Slider + Title -->
-  <div class="slider-section">
-    <h2 class="slider-title">Community Pool & Amenities</h2>
-    <div class="swiper-container-wrapper">
-      <div class="swiper coverflow-swiper">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide">
-            <div class="aspect-ratio-box">
-              <img src="Assests/Renders/Pool Renders/Portside Phase 2 Design (dragged)_page-0001.jpg" alt="Pool Render 1" />
+    <!-- Second Slider + Title -->
+    <div class="slider-section">
+      <h2 class="slider-title">Community Pool & Amenities</h2>
+      <div class="swiper-container-wrapper">
+        <div class="swiper coverflow-swiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <img
+                src="Assests/Renders/Pool Renders/Portside Phase 2 Design (dragged)_page-0001.jpg"
+                alt="Pool Render 1"
+              />
             </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="aspect-ratio-box">
-              <img src="Assests/Renders/Pool Renders/Portside Phase 2 Design (dragged)_page-0001 (1).jpg" alt="Pool Render 2" />
+            <div class="swiper-slide">
+              <img
+                src="Assests/Renders/Pool Renders/Portside Phase 2 Design (dragged)_page-0001 (1).jpg"
+                alt="Pool Render 2"
+              />
             </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="aspect-ratio-box">
+            <div class="swiper-slide">
               <img src="Assests/Renders/Pool Renders/img5.jpg" alt="Pool Render 3" />
             </div>
           </div>
+          <div class="swiper-button-prev coverflow-prev"></div>
+          <div class="swiper-button-next coverflow-next"></div>
         </div>
-        <div class="swiper-button-prev coverflow-prev"></div>
-        <div class="swiper-button-next coverflow-next"></div>
       </div>
     </div>
   </div>
-
-</div>
 
   <!-- Map -->
   <div class="map-wrapper">
     <h2>Location</h2>
-  <!--  <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d32041.146023169676!2d-97.22668821509562!3d27.613610439994385!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8668fbbab4bf51ef%3A0xae921ad9a22570a!2s14917%20Granada%20Dr%2C%20Corpus%20Christi%2C%20TX%2078418%2C%20USA!5e0!3m2!1sen!2smx!4v1749534062307!5m2!1sen!2smx"
-      allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-    </iframe> -->
-    <iframe src="Assests/Maps/interactive-map.html"
-        width="100%" height="600px"
-        style="border:0; border-radius: 12px;">
-</iframe>
+    <iframe
+      src="Assests/Maps/interactive-map.html"
+      width="100%"
+      height="600px"
+      style="border:0; border-radius: 12px;"
+    ></iframe>
   </div>
+
   <!-- Swiper JS -->
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script>
-  const swiper = new Swiper(".cards-swiper", {
-    effect: "cards",
-    grabCursor: true,
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
-    },
-    cardsEffect: {
-      perSlideRotate: 4,
-      perSlideOffset: 10,
-    },
-  });
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    const swiper = new Swiper(".cards-swiper", {
+      effect: "cards",
+      grabCursor: true,
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      cardsEffect: {
+        perSlideRotate: 4,
+        perSlideOffset: 10,
+      },
+    });
 
-  const coverflowSwiper = new Swiper(".coverflow-swiper", {
-  effect: "coverflow",
-  grabCursor: true,
-  centeredSlides: true,
-  slidesPerView: "auto",
-  coverflowEffect: {
-    rotate: 30,
-    stretch: 0,
-    depth: 100,
-    modifier: 1,
-    slideShadows: false,
-  },
-  navigation: {
-    nextEl: ".coverflow-next",
-    prevEl: ".coverflow-prev",
-  },
-});
-
-</script>
+    const coverflowSwiper = new Swiper(".coverflow-swiper", {
+      effect: "coverflow",
+      grabCursor: true,
+      centeredSlides: true,
+      slidesPerView: "auto",
+      coverflowEffect: {
+        rotate: 30,
+        stretch: 0,
+        depth: 100,
+        modifier: 1,
+        slideShadows: false,
+      },
+      navigation: {
+        nextEl: ".coverflow-next",
+        prevEl: ".coverflow-prev",
+      },
+    });
+  </script>
 </body>
 </html>
