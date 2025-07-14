@@ -47,12 +47,25 @@
     }
 
     .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-left: auto;
-      margin-right: auto;
+      position: relative;
     }
+
+    .morph-logo,
+    .desktop-logo,
+    .mobile-logo {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .desktop-logo,
+    .mobile-logo {
+      position: relative;
+      opacity: 1;
+    }
+
     .nav-logo .logo-icon {
       height: 80px;
       width: auto;
@@ -62,15 +75,12 @@
       width: auto;
     }
     .mobile-logo {
-      display: none;
       height: 200px;
       width: auto;
     }
-
     .morph-logo {
-      display: none;
       height: 50px;
-      transition: opacity 0.4s ease;
+      transition: opacity 0.3s ease;
     }
 
     @media (max-width: 768px) {
@@ -84,11 +94,11 @@
 
     .top-nav.shrink .desktop-logo,
     .top-nav.shrink .mobile-logo {
-      display: none;
+      opacity: 0;
     }
 
     .top-nav.shrink .morph-logo {
-      display: block;
+      opacity: 1;
     }
 
     .nav-links {
