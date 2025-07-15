@@ -444,7 +444,7 @@
 
     @media (max-width: 768px) {
         .glass-container {
-            margin-top: 100px; /* push it down below the nav */
+            margin-top: 50px; /* push it down below the nav */
           }
         .nav-links {
         display: none;
