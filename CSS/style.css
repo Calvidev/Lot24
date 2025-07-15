@@ -107,15 +107,16 @@
     }
 
     /* Layout */
-    .container {
-      display: flex;
-      justify-content: space-between;
-      align-items: stretch;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 60px 20px;
-      gap: 40px;
-    }
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 20px;
+  gap: 40px;
+  padding-top: 100px;
+}
     .left, .right {
       flex: 0 0 50%;
       display: flex;
