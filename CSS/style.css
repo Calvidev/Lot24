@@ -241,6 +241,7 @@
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
       text-align: center;
       color: #1d1d1f;
+      padding-top: 50px;
     }
     .feature .icon {
       font-size: 1.6em;
