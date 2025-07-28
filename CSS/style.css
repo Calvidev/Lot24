@@ -105,7 +105,12 @@
       color: #1d1d1f;
       line-height: 1.6;
     }
-
+    @media (max-width: 768px) {
+      body {
+        background: url("Assets/Background/sand_dunes_blurred_portrait.jpg") no-repeat center center fixed;
+        background-size: cover;
+      }
+    }
     /* Layout */
 .container {
   display: flex;
