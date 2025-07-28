@@ -107,9 +107,11 @@
     }
 @media (max-width: 768px) {
   body {
-    background: url("../Assets/Background/defocused-sand-dunes-with-grass-compressed-mobile.jpg") no-repeat center center fixed;
-    background-attachment: fixed;
+    background: url("../Assets/Background/defocused-sand-dunes-with-grass-compressed-mobile.jpg") no-repeat center center;
     background-size: cover;
+    background-attachment: fixed;
+    background-position: center center;
+    background-repeat: no-repeat;
   }
 }
     /* Layout */
