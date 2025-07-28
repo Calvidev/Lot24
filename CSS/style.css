@@ -154,7 +154,6 @@
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.3);
-      padding: 0.75rem 1.25rem;
       margin: 3rem auto 3rem auto;
       align-self: center;
       max-width: fit-content;
@@ -168,7 +167,9 @@
       width: 100%;
       flex-direction: column;
       color: white;
-      height: 100%;
+      height: auto;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
     }
     /* Glass Container */
     .glass-container {
@@ -300,8 +301,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      height: 100%;
+      justify-content: flex-start;
+      height: auto;
       max-width: 48%;
       text-align: center;
     }
