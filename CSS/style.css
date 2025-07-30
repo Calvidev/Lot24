@@ -189,6 +189,20 @@
       flex-direction: column;
       justify-content: center;
     }
+
+    .lot24-title-box {
+      backdrop-filter: blur(10px);
+      background: rgba(0, 0, 0, 0.5); /* Darker and more opaque */
+      color: white;
+      padding: 1.5rem 2rem;
+      border-radius: 16px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      max-width: 90%;
+      margin: 2rem auto;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
     
     /* Logo & Title */
     /*.logo-row {
@@ -314,7 +328,6 @@
     .slider-title {
       font-size: 1.25rem;
       margin-bottom: 10px;
-      margin-top: 30px;
     }
     .swiper-container-wrapper {
       width: 100%;
