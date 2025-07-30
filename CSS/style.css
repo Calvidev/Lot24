@@ -270,7 +270,10 @@
 
     /* Map */
     .map-wrapper {
-      background: #fff;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       padding: 60px 20px;
       text-align: center;
       max-width: 1200px;
