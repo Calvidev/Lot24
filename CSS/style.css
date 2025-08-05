@@ -605,7 +605,7 @@
   align-items: flex-start;
   position: relative;
   margin-top: 40px;
-  border-top: 3px solid #0077b6;
+  border-top: 3px solid #0098b6;
   padding-top: 40px;
   flex-wrap: wrap;
 }
@@ -632,7 +632,7 @@
 .timeline-step h3 {
   margin: 0;
   font-size: 1rem;
-  color: #023e8a;
+  color: #02768a;
 }
 
 .timeline-step p {
