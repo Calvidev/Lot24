@@ -157,8 +157,15 @@
     margin: 0 auto;
     padding: 260px 20px 60px; /* Increased top padding */
     gap: 40px;
-    height: calc(100vh - 260px); /* Match height to new top padding */
+    min-height: 100vh;
+    margin-bottom: 80px;
   }
+
+.section {
+  padding: 60px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
     .left, .right {
       flex: 0 0 50%;
       display: flex;
@@ -459,8 +466,15 @@
         padding: 30px 20px;
         padding-top: 100px;
       }
+      .left, .right {
+        width: 100%;
+        flex: unset;
+        max-width: 100%;
+      }
       .right {
-        display: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
       .logo {
         width: 100px;
