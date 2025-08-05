@@ -157,7 +157,7 @@
     align-items: flex-start;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 260px 20px 60px; /* Increased top padding */
+    padding: 160px 20px 60px; /* Reduced top padding */
     gap: 40px;
     min-height: 100vh;
     margin-bottom: 80px;
@@ -224,7 +224,7 @@
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.3);
       padding: 1rem 2rem;
-      margin: 6rem auto 1rem auto; /* add top margin */
+      margin: 4rem auto 1rem auto; /* reduced top margin */
       align-self: center;
       max-width: 800px;
       color: #1d1d1f;
