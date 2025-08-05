@@ -140,9 +140,9 @@
     align-items: center;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 120px 20px 60px; /* More top padding */
+    padding: 260px 20px 60px; /* Increased top padding */
     gap: 40px;
-    height: calc(100vh - 120px); /* Make full height minus nav */
+    height: calc(100vh - 260px); /* Match height to new top padding */
   }
     .left, .right {
       flex: 0 0 50%;
