@@ -134,16 +134,16 @@
   }
 }
     /* Layout */
-.container {
-  display: flex;
-  justify-content: space-between;
-  align-items: stretch;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 60px 20px;
-  gap: 40px;
-  padding-top: 100px;
-}
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 120px 20px 60px; /* More top padding */
+    gap: 40px;
+    height: calc(100vh - 120px); /* Make full height minus nav */
+  }
     .left, .right {
       flex: 0 0 50%;
       display: flex;
