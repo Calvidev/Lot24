@@ -5,6 +5,28 @@
 .model-desktop {
   display: none;
 }
+
+@media (max-width: 768px) {
+  .model-mobile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .model-desktop {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) {
+  .model-mobile {
+    display: none;
+  }
+
+  .model-desktop {
+    display: block;
+  }
+}
     .top-nav {
       display: flex;
       justify-content: space-between;
@@ -96,12 +118,6 @@
         border-radius: 8px;
         box-shadow: 0 8px 16px rgba(0,0,0,0.2);
       }
-      .model-mobile {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
       .model-mobile model-viewer {
         height: 300px;
         width: 300px;
@@ -411,15 +427,6 @@
 
     /* Desktop vs Mobile */
     @media (min-width: 769px) {
-      .model-mobile {
-        display: none;
-      }
-      .model-desktop {
-        display: block;
-      }
-      .model-desktop model-viewer {
-        height: 100%;
-      }
       .slider-flex-container {
         flex-direction: row;
         justify-content: space-between;
@@ -442,9 +449,6 @@
         height: 100%;
         object-fit: cover;
         border-radius: 12px;
-      }
-      .model-desktop {
-        display: block;
       }
     }
 
