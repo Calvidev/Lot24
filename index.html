@@ -12,6 +12,17 @@
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <link rel="stylesheet" href="CSS/style.css" />
+  <style>
+  .hero { position: relative; min-height: calc(100svh + 80px); overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; }
+  .hero-bg .swiper-wrapper, .hero-bg .swiper-slide { height: 100%; }
+  .hero-bg .swiper-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .hero-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.35); }
+  .hero-content { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; text-align: center; padding: 0 20px; }
+  @media (max-width: 768px) {
+    .hero { min-height: calc(100svh + 40px); }
+  }
+</style>
 </head>
 <body>
   <header class="top-nav">
@@ -34,12 +45,35 @@
 
     <div class="hamburger" onclick="toggleMenu()">☰</div>
   </header>
+<!-- HERO -->
+<section class="hero">
+  <!-- Background slides -->
+  <div class="hero-bg swiper hero-swiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide"><img src="Assets/Renders/House Renders Webpage/Lot24 Render 1.jpg" alt="House Render 1" /></div>
+      <div class="swiper-slide"><img src="Assets/Renders/House Renders Webpage/Lot24 Render 2.png" alt="House Render 2" /></div>
+      <div class="swiper-slide"><img src="Assets/Renders/House Renders Webpage/Lot24 Render 3.png" alt="House Render 3" /></div>
+      <div class="swiper-slide"><img src="Assets/Renders/House Renders Webpage/Lot24 Render 4.jpg" alt="House Render 4" /></div>
+      <div class="swiper-slide"><img src="Assets/Renders/House Renders Webpage/Lot24 Render 5.png" alt="House Render 5" /></div>
+    </div>
+  </div>
+
+  <!-- Dark overlay for text readability -->
+  <div class="hero-overlay"></div>
+
+  <!-- Foreground content -->
+  <div class="hero-content">
+    <h1>Seaglass Escape</h1>
+    <p>Modern coastal living steps from Whitecap Beach.</p>
+    <a class="cta" href="#details">Explore the home</a>
+  </div>
+</section>
 
   <!-- Section 1: Glass container with icons + Slider side by side -->
   <div class="container" style="padding-top: 160px;">
     <div class="left">
       <div class="glass-container">
-        <h1>Welcome to Your Seaside Retreat</h1>
+        <h1>Welcome to Your Retreat</h1>
         <h2>Padre Island, TX</h2>
         <div class="text-content">
           <p>
@@ -196,6 +230,13 @@
         disableOnInteraction: false,
       },
       loop: true,
+    });
+    const heroSwiper = new Swiper('.hero-swiper', {
+      effect: 'fade',
+      fadeEffect: { crossFade: true },
+      autoplay: { delay: 4000, disableOnInteraction: false },
+      loop: true,
+      allowTouchMove: false,
     });
   </script>
   <script>
