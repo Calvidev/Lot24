@@ -233,10 +233,15 @@
     });
     const heroSwiper = new Swiper('.hero-swiper', {
       effect: 'fade',
+      speed: 800,
       fadeEffect: { crossFade: true },
-      autoplay: { delay: 4000, disableOnInteraction: false },
       loop: true,
+      loopAdditionalSlides: 2,
       allowTouchMove: false,
+      preloadImages: true,
+      autoplay: { delay: 4000, disableOnInteraction: false },
+      observer: true,
+      observeParents: true,
     });
   </script>
   <script>
