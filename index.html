@@ -12,24 +12,13 @@
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <link rel="stylesheet" href="CSS/style.css" />
-  <style>
-  .hero { position: relative; min-height: calc(100svh + 80px); overflow: hidden; }
-  .hero-bg { position: absolute; inset: 0; }
-  .hero-bg .swiper-wrapper, .hero-bg .swiper-slide { height: 100%; }
-  .hero-bg .swiper-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .hero-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.35); }
-  .hero-content { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; text-align: center; padding: 0 20px; }
-  @media (max-width: 768px) {
-    .hero { min-height: calc(100svh + 40px); }
-  }
-</style>
 </head>
 <body>
   <header class="top-nav">
    
 
     <div class="nav-logo">
-      <img class="main-logo" src="Assets/Logo/Seaglass Icon.png" alt="Seaglass Escape Logo" />
+      <img class="main-logo" src="Assets/Logo/turtle2.png" alt="Seaglass Escape Logo" />
       <img class="main-logo" src="Assets/Logo/Seaglass2 text.png" alt="Seaglass Escape Logo" />
     </div>
 
@@ -47,33 +36,61 @@
   </header>
 <!-- HERO -->
 <section class="hero">
-  <!-- Background slides -->
-  <div class="hero-bg swiper hero-swiper">
-    <div class="swiper-wrapper">
-      <div class="swiper-slide"><img src="Assets/Renders/House Renders Webpage/Lot24 Render 1.jpg" alt="House Render 1" /></div>
-      <div class="swiper-slide"><img src="Assets/Renders/House Renders Webpage/Lot24 Render 2.png" alt="House Render 2" /></div>
-      <div class="swiper-slide"><img src="Assets/Renders/House Renders Webpage/Lot24 Render 3.png" alt="House Render 3" /></div>
-      <div class="swiper-slide"><img src="Assets/Renders/House Renders Webpage/Lot24 Render 4.jpg" alt="House Render 4" /></div>
-      <div class="swiper-slide"><img src="Assets/Renders/House Renders Webpage/Lot24 Render 5.png" alt="House Render 5" /></div>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <h1>Your Coastal Dream Retreat<br/></h1>
+      <p>Explore modern coastal living near Whitecap Beach.</p>
+      <a class="btn primary" href="#signup">Contact us</a>
+    </div>
+    <div class="hero-right">
+      <div class="model-wrap">
+        <model-viewer
+          class="hero-model"
+          src="Assets/Renders/HOUSE MODEL.glb"
+          alt="3D House Model"
+          auto-rotate
+          auto-rotate-delay="0"
+          camera-controls
+          shadow-intensity="5"
+          touch-action="pan-y"
+          ar-modes="webxr scene-viewer quick-look"
+          disable-tap
+          camera-orbit="20deg 80deg 50m"
+        ></model-viewer>
+      </div>
     </div>
   </div>
 
-  <!-- Dark overlay for text readability -->
-  <div class="hero-overlay"></div>
-
-  <!-- Foreground content -->
-  <div class="hero-content">
-    <h1>Seaglass Escape</h1>
-    <p>Modern coastal living steps from Whitecap Beach.</p>
-    <a class="cta" href="#details">Explore the home</a>
+  <div class="search-bar">
+    <div class="search-card">
+      <div class="search-field">
+        <div>
+          <label>Location</label>
+          <span>Padre Island, TX</span>
+        </div>
+      </div>
+      <div class="search-field">
+        <div>
+          <label>Type</label>
+          <span>House</span>
+        </div>
+      </div>
+      <div class="search-field">
+        <div>
+          <label>Price Range</label>
+          <span>$500k – $900k</span>
+        </div>
+      </div>
+      <button class="search-submit">Search</button>
+    </div>
   </div>
 </section>
 
   <!-- Section 1: Glass container with icons + Slider side by side -->
-  <div class="container" style="padding-top: 160px;">
+  <div class="container container--pad-top">
     <div class="left">
       <div class="glass-container">
-        <h1>Welcome to Your Retreat</h1>
+        <h1>Welcome to Your Dream Retreat</h1>
         <h2>Padre Island, TX</h2>
         <div class="text-content">
           <p>
@@ -91,20 +108,14 @@
       </div>
     </div>
     <div class="right">
-      <div class="slider-section" style="max-width: 100%; min-height: 500px;">
-        <div class="swiper-container-wrapper">
-          <div class="swiper coverflow-swiper">
-            <div class="swiper-wrapper">
-              <div class="swiper-slide"><img src="Assets/Renders/House Renders Webpage/Lot24 Render 1.jpg" alt="House Render 1" /></div>
-              <div class="swiper-slide"><img src="Assets/Renders/House Renders Webpage/Lot24 Render 2.png" alt="House Render 2" /></div>
-              <div class="swiper-slide"><img src="Assets/Renders/House Renders Webpage/Lot24 Render 3.png" alt="House Render 3" /></div>
-              <div class="swiper-slide"><img src="Assets/Renders/House Renders Webpage/Lot24 Render 4.jpg" alt="House Render 4" /></div>
-              <div class="swiper-slide"><img src="Assets/Renders/House Renders Webpage/Lot24 Render 5.png" alt="House Render 5" /></div>
-            </div>
-            <div class="swiper-button-prev coverflow-prev"></div>
-            <div class="swiper-button-next coverflow-next"></div>
-          </div>
-        </div>
+      <div class="map-wrapper">
+        <h2>Location</h2>
+        <iframe
+          src="Assets/Maps/interactive-map.html"
+          width="600px"
+          height="600px"
+          class="map-iframe"
+        ></iframe>
       </div>
     </div>
   </div>
@@ -156,14 +167,20 @@
       ></model-viewer>
     </div>
     <div class="right">
-      <div class="map-wrapper">
-        <h2>Location</h2>
-        <iframe
-          src="Assets/Maps/interactive-map.html"
-          width="600px"
-          height="600px"
-          style="border:0; border-radius: 12px;"
-        ></iframe>
+      <div class="slider-section slider-section--tall">
+        <div class="swiper-container-wrapper">
+          <div class="swiper coverflow-swiper">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide"><img src="Assets/Renders/House Renders Webpage/Lot24 Render 1.jpg" alt="House Render 1" /></div>
+              <div class="swiper-slide"><img src="Assets/Renders/House Renders Webpage/Lot24 Render 2.png" alt="House Render 2" /></div>
+              <div class="swiper-slide"><img src="Assets/Renders/House Renders Webpage/Lot24 Render 3.png" alt="House Render 3" /></div>
+              <div class="swiper-slide"><img src="Assets/Renders/House Renders Webpage/Lot24 Render 4.jpg" alt="House Render 4" /></div>
+              <div class="swiper-slide"><img src="Assets/Renders/House Renders Webpage/Lot24 Render 5.png" alt="House Render 5" /></div>
+            </div>
+            <div class="swiper-button-prev coverflow-prev"></div>
+            <div class="swiper-button-next coverflow-next"></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -230,18 +247,6 @@
         disableOnInteraction: false,
       },
       loop: true,
-    });
-    const heroSwiper = new Swiper('.hero-swiper', {
-      effect: 'fade',
-      speed: 800,
-      fadeEffect: { crossFade: true },
-      loop: true,
-      loopAdditionalSlides: 2,
-      allowTouchMove: false,
-      preloadImages: true,
-      autoplay: { delay: 4000, disableOnInteraction: false },
-      observer: true,
-      observeParents: true,
     });
   </script>
   <script>
