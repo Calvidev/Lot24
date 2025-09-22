@@ -15,15 +15,13 @@
 </head>
 <body>
   <header class="top-nav">
-   
-
     <div class="nav-logo">
       <img class="main-logo" src="Assets/Logo/turtle2.png" alt="Seaglass Escape Logo" />
       <img class="main-logo" src="Assets/Logo/Seaglass2 text.png" alt="Seaglass Escape Logo" />
     </div>
 
-    <nav class="nav-right">
-      <ul class="nav-links">
+    <nav class="nav-right" role="navigation" aria-label="Primary">
+      <ul class="nav-links" id="primary-nav">
         <li><a href="#about">About</a></li>
         <li><a href="#features">Features</a></li>
         <li><a href="#gallery">Gallery</a></li>
@@ -32,59 +30,60 @@
       </ul>
     </nav>
 
-    <div class="hamburger" onclick="toggleMenu()">☰</div>
+    <button class="hamburger" type="button" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleMenu()">☰</button>
   </header>
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-inner">
-    <div class="hero-left">
-      <h1>Your Coastal Dream Retreat<br/></h1>
-      <p>Explore modern coastal living near Whitecap Beach.</p>
-      <a class="btn primary" href="#signup">Contact us</a>
-    </div>
-    <div class="hero-right">
-      <div class="model-wrap">
-        <model-viewer
-          class="hero-model"
-          src="Assets/Renders/HOUSE MODEL.glb"
-          alt="3D House Model"
-          auto-rotate
-          auto-rotate-delay="0"
-          camera-controls
-          shadow-intensity="5"
-          touch-action="pan-y"
-          ar-modes="webxr scene-viewer quick-look"
-          disable-tap
-          camera-orbit="20deg 80deg 50m"
-        ></model-viewer>
-      </div>
-    </div>
-  </div>
 
-  <div class="search-bar">
-    <div class="search-card">
-      <div class="search-field">
-        <div>
-          <label>Location</label>
-          <span>Padre Island, TX</span>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <h1>Your Coastal Dream Retreat<br/></h1>
+        <p>Explore modern coastal living near Whitecap Beach.</p>
+        <a class="btn primary" href="#signup">Contact us</a>
+      </div>
+      <div class="hero-right">
+        <div class="model-wrap">
+          <model-viewer
+            class="hero-model"
+            src="Assets/Renders/HOUSE MODEL.glb"
+            alt="3D House Model"
+            auto-rotate
+            auto-rotate-delay="0"
+            camera-controls
+            shadow-intensity="5"
+            touch-action="pan-y"
+            ar-modes="webxr scene-viewer quick-look"
+            disable-tap
+            camera-orbit="20deg 80deg 50m"
+          ></model-viewer>
         </div>
       </div>
-      <div class="search-field">
-        <div>
-          <label>Type</label>
-          <span>House</span>
-        </div>
-      </div>
-      <div class="search-field">
-        <div>
-          <label>Price Range</label>
-          <span>$500k – $900k</span>
-        </div>
-      </div>
-      <button class="search-submit">Search</button>
     </div>
-  </div>
-</section>
+
+    <div class="search-bar">
+      <div class="search-card">
+        <div class="search-field">
+          <div>
+            <label>Location</label>
+            <span>Padre Island, TX</span>
+          </div>
+        </div>
+        <div class="search-field">
+          <div>
+            <label>Type</label>
+            <span>House</span>
+          </div>
+        </div>
+        <div class="search-field">
+          <div>
+            <label>Price Range</label>
+            <span>$500k – $900k</span>
+          </div>
+        </div>
+        <button class="search-submit">Search</button>
+      </div>
+    </div>
+  </section>
 
   <!-- Section 1: Glass container with icons + Slider side by side -->
   <div class="container container--pad-top">
@@ -210,7 +209,6 @@
     </div>
   </div>
 
-
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
     const swiper = new Swiper(".cards-swiper", {
@@ -247,6 +245,10 @@
         disableOnInteraction: false,
       },
       loop: true,
+      breakpoints: {
+        0: { slidesPerView: 1, spaceBetween: 12, centeredSlides: true },
+        768: { slidesPerView: 'auto' }
+      }
     });
   </script>
   <script>
@@ -269,8 +271,10 @@
   </script>
   <script>
     function toggleMenu() {
-      const navLinks = document.querySelector('.nav-links');
-      navLinks.classList.toggle('active');
+      const navLinks = document.getElementById('primary-nav');
+      const btn = document.querySelector('.hamburger');
+      const isOpen = navLinks.classList.toggle('active');
+      if (btn) btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     }
   </script>
 
