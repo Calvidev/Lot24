@@ -632,9 +632,20 @@ html { scroll-behavior: smooth; }
   align-items: flex-start;
   position: relative;
   margin-top: 40px;
-  border-top: 3px solid #0098b6;
+  /* border-top removed for connector line */
   padding-top: 40px;
   flex-wrap: wrap;
+}
+
+.graphic-timeline::before {
+  content: "";
+  position: absolute;
+  top: 18px; /* vertically centers with circles */
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(255,255,255,0.4);
+  z-index: 0;
 }
 
 .timeline-step {
@@ -643,6 +654,7 @@ html { scroll-behavior: smooth; }
   max-width: 200px;
   position: relative;
   text-align: center;
+  z-index: 1; /* ensure circles and content sit above the line */
 }
 
 .timeline-step .circle {
@@ -731,4 +743,358 @@ html { scroll-behavior: smooth; }
 @media (max-width: 768px){
   .video-section{ padding: 20px 0; margin-bottom: 24px; }
   .video-wrapper{ border-radius: 12px; }
+}
+
+/* ===== Location Hero (Video 16:9 + Map 9:16) ===== */
+.location-hero{ padding: 40px var(--pad-x); max-width: var(--maxw); margin: 0 auto; }
+.loc-inner{ display:flex; align-items:stretch; gap:24px; }
+.loc-left{ flex: 1.2; }
+.loc-right{ flex: 0.8; }
+
+/* 16:9 video frame */
+.loc-video-wrap{ position:relative; width:100%; height:520px; border-radius:16px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,.25); }
+.loc-video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
+
+/* 9:16 map frame */
+.loc-map-wrap{ position:relative; width:100%; height:520px; border-radius:16px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,.25); }
+.loc-map{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+
+@media (max-width: 992px){
+  .location-hero{ padding: 24px var(--pad-x); }
+  .loc-inner{ flex-direction:column; gap:16px; }
+  .loc-left, .loc-right{ width:100%; }
+  .loc-video-wrap{ border-radius:12px; }
+  .loc-map-wrap{ border-radius:12px; aspect-ratio:16/9; }
+  /* On mobile, revert to aspect ratios so both stack nicely */
+  .loc-video-wrap{ height:auto; aspect-ratio:16/9; }
+  .loc-map-wrap{ height:auto; aspect-ratio:16/9; }
+}
+/* Generic section title */
+.section-title{
+  font-size: clamp(22px, 3.2vw, 32px);
+  font-weight: 800;
+  line-height: 1.1;
+  text-align: center;
+  color: #1d1d1f;
+  margin: 0 0 16px;
+}
+@media (max-width: 992px){
+  .section-title{ margin-bottom: 12px; }
+}
+/* Glass container for Location section */
+.loc-card{
+  background: rgba(255,255,255,0.14);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.28);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  padding: 16px;
+}
+
+@media (max-width: 992px){
+  .loc-card{ border-radius: 12px; padding: 12px; }
+}
+
+/* Improve Location section readability on glass */
+.section-title{
+  color:#fff;                       /* make title white */
+  text-shadow:0 2px 12px rgba(0,0,0,.30);
+  margin:0 0 10px;
+}
+
+/* Subtitle under Location title */
+.section-subtitle,
+.section-lede{
+  text-align:center;
+  color:rgba(255,255,255,.92);
+  font-weight:600;
+  letter-spacing:.2px;
+  margin:0 auto 14px;
+  max-width:900px;
+}
+
+/* Higher-contrast highlight pills on glass */
+.loc-highlights li{
+  background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.45);
+  color:#fff;
+  border-radius:999px;
+  padding:6px 12px;
+  font-weight:700;
+  font-size:14px;
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+}
+
+/* Slightly stronger glass for the container */
+.location-hero .loc-card{
+  background:rgba(0,0,0,.18);
+  border:1px solid rgba(255,255,255,.32);
+}
+@media (max-width: 992px){
+  .section-title{ margin-bottom:8px; }
+}
+/* ===== Polished Timeline (glass style to match Location) ===== */
+.graphic-timeline-section {
+  padding: 40px var(--pad-x);
+  max-width: var(--maxw);
+  margin: 0 auto 60px;
+  text-align: center;
+}
+
+.timeline-title {
+  font-size: clamp(22px, 3.2vw, 32px);
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 2px 12px rgba(0,0,0,.3);
+  margin-bottom: 24px;
+}
+
+.graphic-timeline {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  background: rgba(0,0,0,0.18);
+  border: 1px solid rgba(255,255,255,0.32);
+  border-radius: 16px;
+  padding: 24px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.12);
+}
+
+.timeline-step {
+  flex: 1;
+  text-align: center;
+  color: rgba(255,255,255,0.92);
+}
+
+.timeline-step .circle {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.20);
+  border: 2px solid rgba(255,255,255,0.40);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #fff;
+}
+
+.timeline-step h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  margin: 6px 0 4px;
+}
+
+.timeline-step p {
+  font-size: 14px;
+  opacity: 0.88;
+  color: #fff;
+}
+
+/* Previously hid steps 4+; show all steps now */
+.graphic-timeline .timeline-step:nth-child(n+4){
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .graphic-timeline {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .timeline-step { margin-bottom: 8px; }
+}
+/* ===== Scroll-friendly 3D model ===== */
+/* Let vertical scroll pass through the model area on touch devices */
+model-viewer { touch-action: pan-y; }
+
+/* Ensure the hero model specifically always respects vertical scroll on small screens */
+@media (max-width: 992px){
+  .hero-right .hero-model{ touch-action: pan-y !important; }
+}
+/* Floor plan image sizing */
+.floorplan { 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+}
+
+.floorplan img {
+  width: 100%;
+  height: auto;
+  max-width: 720px;      /* cap desktop width */
+  max-height: 520px;     /* cap desktop height */
+  object-fit: contain;   /* preserve proportions */
+  background: rgba(255,255,255,0.06);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  padding: 8px;          /* optional frame */
+}
+
+@media (max-width: 992px){
+  .floorplan img {
+    max-width: 100%;
+    max-height: 320px;   /* smaller cap on mobile */
+  }
+}
+/* Improve contrast behind Renders section heading */
+.renders-section{ position: relative; }
+.renders-section::before{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, var(--maxw));
+  height: 120px; /* darken area behind the heading */
+  background: linear-gradient(180deg, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0.22) 60%, rgba(0,0,0,0) 100%);
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 12px 12px 0 0;
+}
+
+/* Ensure heading text sits above overlay and is extra legible */
+.renders-section .section-title,
+.renders-section .section-subtitle{
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  text-shadow: 0 2px 14px rgba(0,0,0,.45);
+}
+
+/* Optional: add a subtle pill background to the subtitle for even more clarity */
+.renders-section .section-subtitle{
+  display: inline-block;
+  padding: 6px 10px;
+  background: rgba(0,0,0,0.28);
+  border-radius: 10px;
+}
+
+@media (max-width: 768px){
+  .renders-section::before{ height: 140px; }
+}
+
+/* --- Renders heading fixes & centering --- */
+.renders-section{ text-align:center; }
+
+/* Force the subtitle to behave like a centered pill, not full-width */
+.renders-section .section-subtitle{
+  display:inline-block !important;
+  margin-left:auto; 
+  margin-right:auto; 
+  max-width: 90%;
+  padding: 8px 12px;                 /* a touch more breathing room */
+  background: rgba(0,0,0,0.36);      /* slightly stronger for readability */
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.25);
+}
+
+/* Tighten the overlay so it doesn’t feel too heavy */
+.renders-section::before{ height: 110px; background: linear-gradient(180deg, rgba(0,0,0,0.36) 0%, rgba(0,0,0,0.18) 60%, rgba(0,0,0,0) 100%); }
+
+@media (max-width: 768px){
+  .renders-section::before{ height: 130px; }
+}
+/* ---- Renders heading cleanup: remove dark backgrounds/pills ---- */
+.renders-section::before{ display: none !important; }
+
+.renders-section .section-title,
+.renders-section .section-subtitle{
+  background: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  color: #ffffff;
+  text-shadow: 0 2px 6px rgba(0,0,0,.5);
+  display: block;
+  text-align: center;
+}
+
+/* spacing tweaks */
+.renders-section .section-title{ margin: 0 0 6px; }
+.renders-section .section-subtitle{ margin: 0 0 14px; }
+
+/* Pool gallery sizing */
+
+/* ===== Pool gallery fixes ===== */
+.pool-gallery{ max-width: 1100px; margin: 24px auto 48px; }
+.pool-swiper{ aspect-ratio: 16/9; border-radius: 16px; overflow: hidden; box-shadow: 0 12px 28px rgba(0,0,0,.28); }
+.pool-swiper .swiper-slide{ aspect-ratio: 16/9; border-radius: 16px; overflow: hidden; }
+.pool-swiper .swiper-slide img{ width:100%; height:100%; object-fit: cover; }
+
+/* Bigger, clearer nav buttons just for pool slider */
+.pool-swiper .swiper-button-prev,
+.pool-swiper .swiper-button-next{
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(0,0,0,.35);
+  backdrop-filter: blur(4px);
+}
+.pool-swiper .swiper-button-prev::after,
+.pool-swiper .swiper-button-next::after{ font-size: 18px; color: #fff; }
+
+@media (max-width: 992px){
+  .pool-gallery{ max-width: 100%; margin: 16px auto 32px; }
+  .pool-swiper{ aspect-ratio: 16/9; border-radius: 12px; }
+}
+
+/* ===== Strong overrides for Pool slider sizing/fit ===== */
+/* Make sure pool slider uses our larger container and 16:9 frame */
+.pool-gallery{ max-width: 1100px !important; margin: 24px auto 48px; }
+.pool-swiper{ aspect-ratio: 16/9 !important; border-radius: 16px; overflow: hidden; box-shadow: 0 12px 28px rgba(0,0,0,.28); }
+.pool-swiper .swiper-slide{ aspect-ratio: 16/9 !important; border-radius: 16px; overflow: hidden; }
+
+/* Override generic/coverflow image rules that force absolute positioning */
+.pool-swiper .swiper-slide img{
+  position: static !important;   /* cancel absolute from .coverflow-swiper */
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block;
+}
+
+/* Larger, clearer nav buttons only for pool slider */
+.pool-swiper .swiper-button-prev,
+.pool-swiper .swiper-button-next{
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(0,0,0,.35);
+  backdrop-filter: blur(4px);
+}
+.pool-swiper .swiper-button-prev::after,
+.pool-swiper .swiper-button-next::after{ font-size: 18px; color: #fff; }
+
+@media (max-width: 992px){
+  .pool-gallery{ max-width: 100% !important; margin: 16px auto 32px; }
+  .pool-swiper{ aspect-ratio: 16/9 !important; border-radius: 12px; }
+  .pool-swiper .swiper-slide{ border-radius: 12px; }
+  .pool-swiper .swiper-slide img{ position: static !important; }
+}
+/* ===== FINAL Pool size overrides ===== */
+.pool-gallery{ width: 100% !important; max-width: 1200px !important; margin: 32px auto 56px !important; padding: 0 16px; }
+.pool-swiper{ width: 100% !important; max-width: 1200px !important; aspect-ratio: 16/9 !important; }
+.pool-swiper .swiper-wrapper{ width: 100% !important; align-items: stretch; }
+.pool-swiper .swiper-slide{ width: 100% !important; height: auto !important; aspect-ratio: 16/9 !important; }
+.pool-swiper .swiper-slide img{ position: static !important; width: 100% !important; height: 100% !important; object-fit: cover !important; }
+
+@media (max-width: 992px){
+  .pool-gallery{ max-width: 100% !important; padding: 0 12px; margin: 20px auto 40px !important; }
+  .pool-swiper{ aspect-ratio: 16/9 !important; }
+  .pool-swiper .swiper-slide{ aspect-ratio: 16/9 !important; }
+}
+/* ===== Amenities (Pool) styled like Location ===== */
+.amenities-section{ padding: 40px var(--pad-x); max-width: var(--maxw); margin: 0 auto; }
+.amenities-section .loc-card{ background: rgba(0,0,0,.18); border: 1px solid rgba(255,255,255,.32); border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,.12); padding: 16px; }
+.amenities-section .section-title,
+.amenities-section .section-subtitle{ color:#fff; text-shadow:0 2px 12px rgba(0,0,0,.30); text-align:center; margin: 0 0 12px; }
+.amenities-section .pool-gallery{ max-width: 1100px; margin: 8px auto 0; }
+
+@media (max-width: 992px){
+  .amenities-section{ padding: 24px var(--pad-x); }
+  .amenities-section .loc-card{ border-radius:12px; padding:12px; }
 }

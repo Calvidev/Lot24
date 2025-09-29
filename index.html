@@ -39,7 +39,7 @@
       <div class="hero-left">
         <h1>Your Coastal Dream Retreat<br/></h1>
         <p>Explore modern coastal living near Whitecap Beach.</p>
-        <a class="btn primary" href="#signup">Contact us</a>
+        <a class="btn primary" href="mailto:info@seaglassescape.com?subject=Seaglass%20Escape%20Inquiry&body=Hi%20Seaglass%20Escape%20team%2C%0A%0AI%27m%20interested%20in%20the%20property.%20Could%20you%20share%20more%20details%20about%20availability%20and%20pricing%3F%0A%0AThanks!" aria-label="Email us">Contact us</a>
       </div>
       <div class="hero-right">
         <div class="model-wrap">
@@ -54,7 +54,11 @@
             touch-action="pan-y"
             ar-modes="webxr scene-viewer quick-look"
             disable-tap
+            disable-zoom
+            interaction-policy="allow-when-focused"
+            interaction-prompt="none"
             camera-orbit="20deg 80deg 50m"
+            tabindex="0"
           ></model-viewer>
         </div>
       </div>
@@ -77,25 +81,86 @@
         <div class="search-field">
           <div>
             <label>Price Range</label>
-            <span>$500k – $900k</span>
+            <span>$720k</span>
           </div>
         </div>
         <button class="search-submit">Buy</button>
       </div>
     </div>
   </section>
-  <!-- Video Section: under hero -->
-  <section class="section video-section" id="overview-video">
-    <div class="video-wrapper">
-      <video class="video-el" playsinline autoplay muted loop preload="metadata" poster="Assets/Video/hero-poster.jpg">
-        <source src="Assets/Background/Drone.mov" type="video/webm" />
-        <source src="Assets/Background/Drone.mov" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
+
+  <!-- Location Hero: video 16:9 (left) + map 9:16 (right) -->
+  <section class="location-hero" id="location-hero">
+  <div class="loc-card">
+    <h2 class="section-title">Location</h2>
+    <p class="section-subtitle">
+      Discover Seaglass Escape in a <strong>waterfront community</strong>, <strong>STR permitted</strong>, and only <strong>5 minutes from Whitecap Beach</strong>.
+    </p>
+    <div class="loc-inner">
+      <div class="loc-left">
+        <div class="loc-video-wrap">
+          <video class="loc-video" playsinline autoplay muted loop preload="metadata" poster="Assets/Background/DroneThumbNail.png">
+            <source src="Assets/Background/Drone.mov" type="video/webm" />
+            <source src="Assets/Background/Drone.mov" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+      <div class="loc-right">
+        <div class="loc-map-wrap">
+          <iframe 
+            class="loc-map"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d28283.407485322918!2d-97.22714059944994!3d27.611322085941026!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8668fbbacbb7f7bd%3A0xe9f8d8bb2e558e0e!2s14873%20Granada%20Dr%20UNIT%2018%2C%20Corpus%20Christi%2C%20TX%2078418%2C%20USA!5e0!3m2!1sen!2smx!4v1759109051000!5m2!1sen!2smx" 
+            width="600" 
+            height="450" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
     </div>
+  </div><!-- /.loc-card -->
   </section>
 
-  <!-- Section 1: Glass container with icons + Slider side by side -->
+  <!-- Renders + Floor Plan Section -->
+  <section class="renders-section">
+    <h2 class="section-title">Explore the Home</h2>
+    <p class="section-subtitle">Modern coastal design with spacious living and investment potential.</p>
+
+    <div class="renders-inner">
+      <!-- Renders Slider -->
+      <div class="renders-slider">
+        <div class="swiper-container-wrapper pool-gallery">
+          <div class="swiper coverflow-swiper pool-swiper">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide"><img src="Assets/Renders/House Renders Webpage/Lot24 Render 1.jpg" alt="House Render 1" /></div>
+              <div class="swiper-slide"><img src="Assets/Renders/House Renders Webpage/Lot24 Render 2.png" alt="House Render 2" /></div>
+              <div class="swiper-slide"><img src="Assets/Renders/House Renders Webpage/Lot24 Render 3.png" alt="House Render 3" /></div>
+              <div class="swiper-slide"><img src="Assets/Renders/House Renders Webpage/Lot24 Render 4.jpg" alt="House Render 4" /></div>
+              <div class="swiper-slide"><img src="Assets/Renders/House Renders Webpage/Lot24 Render 5.png" alt="House Render 5" /></div>
+            </div>
+            <div class="swiper-button-prev coverflow-prev"></div>
+            <div class="swiper-button-next coverflow-next"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Features below renders -->
+    <div class="features">
+      <div class="feature"><div class="icon">🛁</div><div class="label">3.5 Baths</div></div>
+      <div class="feature"><div class="icon">🛏️</div><div class="label">3 Bedrooms</div></div>
+      <div class="feature"><div class="icon">📐</div><div class="label">1,159 sqft</div></div>
+    </div>
+      <!-- Floor Plan -->
+      <div class="floorplan">
+        <img src="Assets/Plans/House Lot 24.png" alt="Floor Plan" />
+      </div>
+    
+  </section>
+
+  <!-- Section 1: Glass container with icons + Slider side by side 
   <div class="container container--pad-top">
     <div class="left">
       <div class="glass-container">
@@ -120,14 +185,14 @@
       <div class="map-wrapper">
         <h2>Location</h2>
         <iframe
-          src="Assets/Maps/interactive-map.html"
+          src="Assets/Maps/"
           width="600px"
           height="600px"
           class="map-iframe"
         ></iframe>
       </div>
     </div>
-  </div>
+  </div>-->
 
   <!-- Horizontal Graphic Timeline -->
   <div class="graphic-timeline-section">
@@ -135,17 +200,19 @@
     <div class="graphic-timeline">
       <div class="timeline-step">
         <div class="circle">1</div>
-        <h3>Engineering Work</h3>
+        <h3>Engineering Work & 
+          Permits Approved
+        </h3>
         <p>Sep 2025</p>
       </div>
       <div class="timeline-step">
         <div class="circle">2</div>
-        <h3>Permits Approved</h3>
+        <h3>Foundation Poured</h3>
         <p>Oct 2025</p>
       </div>
       <div class="timeline-step">
         <div class="circle">3</div>
-        <h3>Construction Started</h3>
+        <h3>Framing Started</h3>
         <p>Nov 2025</p>
       </div>
       <div class="timeline-step">
@@ -161,51 +228,35 @@
     </div>
   </div>
 
-  <!-- Section 2: 3D Model Left + Map Right -->
-  <div class="container">
-    <div class="left model-desktop">
-      <model-viewer
-        src="Assets/Renders/HOUSE MODEL.glb"
-        alt="3D House Model"
-        auto-rotate
-        auto-rotate-delay="0"
-        camera-controls
-        shadow-intensity="5"
-        touch-action="pan-y"
-        camera-orbit="20deg 75deg 50m"
-      ></model-viewer>
-    </div>
-    <div class="right">
-      <div class="slider-section slider-section--tall">
-        <div class="swiper-container-wrapper">
-          <div class="swiper coverflow-swiper">
-            <div class="swiper-wrapper">
-              <div class="swiper-slide"><img src="Assets/Renders/House Renders Webpage/Lot24 Render 1.jpg" alt="House Render 1" /></div>
-              <div class="swiper-slide"><img src="Assets/Renders/House Renders Webpage/Lot24 Render 2.png" alt="House Render 2" /></div>
-              <div class="swiper-slide"><img src="Assets/Renders/House Renders Webpage/Lot24 Render 3.png" alt="House Render 3" /></div>
-              <div class="swiper-slide"><img src="Assets/Renders/House Renders Webpage/Lot24 Render 4.jpg" alt="House Render 4" /></div>
-              <div class="swiper-slide"><img src="Assets/Renders/House Renders Webpage/Lot24 Render 5.png" alt="House Render 5" /></div>
-            </div>
-            <div class="swiper-button-prev coverflow-prev"></div>
-            <div class="swiper-button-next coverflow-next"></div>
+  <!-- Amenities: Glass Card + Pool Slider -->
+  <section class="amenities-section" id="amenities">
+    <div class="loc-card">
+      <h2 class="section-title">Community Pool &amp; Amenities</h2>
+      <p class="section-subtitle">Resort-style pool, shaded pergolas, and gathering spaces steps from your door.</p>
+
+      <div class="swiper-container-wrapper pool-gallery">
+        <div class="swiper coverflow-swiper pool-swiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="Assets/Renders/Pool Renders/Portside Phase 2 Design (dragged)_page-0001.jpg" alt="Pool Render 1" /></div>
+            <div class="swiper-slide"><img src="Assets/Renders/Pool Renders/Portside Phase 2 Design (dragged)_page-0001 (1).jpg" alt="Pool Render 2" /></div>
+            <div class="swiper-slide"><img src="Assets/Renders/Pool Renders/img5.jpg" alt="Pool Render 3" /></div>
           </div>
+          <div class="swiper-button-prev coverflow-prev"></div>
+          <div class="swiper-button-next coverflow-next"></div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- Section 3: Plans Left + Pool Slider Right -->
+  <!-- Section 3: Plans Left + Pool Slider Right 
   <div class="container">
-    <div class="left">
-      <img src="Assets/Plans/House Lot 24.png" alt="Plans" />
-    </div>
     <div class="right">
       <div class="slider-section">
         <div class="glass-title">
           <h2 class="slider-title">Community Pool & Amenities</h2>
         </div>
-        <div class="swiper-container-wrapper">
-          <div class="swiper coverflow-swiper">
+        <div class="swiper-container-wrapper pool-gallery">
+          <div class="swiper coverflow-swiper pool-swiper">
             <div class="swiper-wrapper">
               <div class="swiper-slide"><img src="Assets/Renders/Pool Renders/Portside Phase 2 Design (dragged)_page-0001.jpg" alt="Pool Render 1" /></div>
               <div class="swiper-slide"><img src="Assets/Renders/Pool Renders/Portside Phase 2 Design (dragged)_page-0001 (1).jpg" alt="Pool Render 2" /></div>
@@ -217,7 +268,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div>-->
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
@@ -288,8 +339,5 @@
     }
   </script>
 
-  <a href="mailto:info@seaglassescape.com" class="floating-bubble" aria-label="Email us">
-    📧
-  </a>
 </body>
 </html>
