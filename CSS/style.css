@@ -731,6 +731,12 @@ html { scroll-behavior: smooth; }
   .hero-model{height:360px;}
   .search-card{grid-template-columns:1fr;}
 }
+
+@media (max-width: 768px){
+  .hero-model{
+    margin-top: -40px; /* move the model up */
+  }
+}
 .glass-container img {
   display: block;
   margin-left: auto;
@@ -864,6 +870,16 @@ html { scroll-behavior: smooth; }
   box-shadow: 0 8px 24px rgba(0,0,0,.12);
 }
 
+.graphic-timeline::before {
+  content: "";
+  position: absolute;
+  top: 56px;
+  left: 40px;
+  right: 40px;
+  height: 2px;
+  background: rgba(255,255,255,0.35);
+}
+
 .timeline-step {
   flex: 1;
   text-align: center;
@@ -903,12 +919,35 @@ html { scroll-behavior: smooth; }
 }
 
 @media (max-width: 768px) {
+  /* Stack vertically and add a vertical connector line */
   .graphic-timeline {
     flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px 16px 16px 56px; /* room for the vertical line */
+    position: relative;
   }
-  .timeline-step { margin-bottom: 8px; }
+
+  .graphic-timeline::before {
+    top: 0;       /* start at top of card */
+    bottom: 0;    /* extend to bottom */
+    left: 28px;   /* position the vertical line */
+    right: auto;  /* ignore right for vertical */
+    width: 2px;   /* vertical line thickness */
+    height: auto; /* full height */
+    background: rgba(255,255,255,0.35);
+  }
+
+  .timeline-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin: 6px 0;
+    text-align: left;
+  }
+
+  .timeline-step .circle { margin: 0; }
+  .timeline-step h3, .timeline-step p { text-align: left; }
 }
 /* ===== Scroll-friendly 3D model ===== */
 /* Let vertical scroll pass through the model area on touch devices */
@@ -1097,4 +1136,77 @@ model-viewer { touch-action: pan-y; }
 @media (max-width: 992px){
   .amenities-section{ padding: 24px var(--pad-x); }
   .amenities-section .loc-card{ border-radius:12px; padding:12px; }
+}
+/* ---- Timeline responsive refinements ---- */
+/* Keep the timeline card higher on short landscape screens */
+@media (orientation: landscape) and (max-height: 500px){
+  .graphic-timeline-section{ margin: 20px auto; padding: 12px var(--pad-x); }
+  .graphic-timeline{ padding: 16px; }
+}
+
+/* Portrait phones: center a vertical line, text to the right */
+@media (max-width: 768px) and (orientation: portrait){
+  .graphic-timeline{
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    padding: 16px;           /* even padding, we’ll offset steps instead */
+    position: relative;
+    margin: 0 auto;          /* ensure it’s centered in the section */
+  }
+  .graphic-timeline::before{
+    top: 0; bottom: 0;       /* full height */
+    left: 50%;               /* center the line */
+    right: auto;
+    transform: translateX(-50%);
+    width: 2px; height: auto;
+    background: rgba(255,255,255,0.35);
+  }
+  .timeline-step{
+    display: block;
+    position: relative;
+    margin: 12px 0;
+    padding-left: calc(50% + 40px);  /* push text to the right of the line */
+    text-align: left;
+  }
+  /* connector from circle to the right-hand text */
+  .timeline-step::before{
+    content: "";
+    position: absolute;
+    top: 50%;                 /* aligns with vertical center of circle */
+    left: 50%;
+    width: 16px;               /* length of connector */
+    height: 2px;               /* thickness */
+    background: rgba(255,255,255,0.55);
+    transform: translate(24px, -1px); /* start at the right edge of the 48px circle, vertically centered */
+    border-radius: 2px;
+  }
+  .timeline-step .circle{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;               /* no extra offset */
+  }
+  .timeline-step h3, .timeline-step p{ text-align: left; }
+  .timeline-step h3{ display:block; margin: 0 0 6px; }
+  .timeline-step p{ display:block; margin: 0; font-size: 14px; opacity: 0.9; }
+}
+/* === Desktop timeline: top rail above circles (match v1 look) === */
+@media (min-width: 769px){
+  .graphic-timeline{ padding-top: 40px !important; }
+  .graphic-timeline::before{
+    top: 18px !important;    /* place the line near the top, not through circles */
+    left: 24px !important;   /* a touch of inset to match rounded corners */
+    right: 24px !important;
+    height: 3px !important;
+  }
+}
+/* Center the Amenities description text */
+.amenities-section .section-subtitle,
+.amenities-section .section-lede{
+  text-align: center !important;
+  margin: 0 auto 12px !important;
+  max-width: 900px;
+  display: block;
 }
