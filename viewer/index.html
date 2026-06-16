@@ -45,15 +45,12 @@
       margin-bottom: 2.5rem;
     }
     #progress-track {
-      width: 180px;
-      height: 2px;
+      width: 180px; height: 2px;
       background: rgba(255,255,255,0.12);
-      border-radius: 2px;
-      overflow: hidden;
+      border-radius: 2px; overflow: hidden;
     }
     #progress-fill {
-      height: 100%;
-      width: 0%;
+      height: 100%; width: 0%;
       background: #e8d5b7;
       border-radius: 2px;
       transition: width 0.15s ease;
@@ -67,54 +64,37 @@
 
     /* ── Back link ── */
     #back {
-      position: fixed;
-      top: 16px; left: 16px;
-      z-index: 10;
+      position: fixed; top: 16px; left: 16px; z-index: 10;
     }
     #back a {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
+      display: inline-flex; align-items: center; gap: 5px;
       color: rgba(255,255,255,0.9);
       text-decoration: none;
-      font-size: 0.75rem;
-      letter-spacing: 0.07em;
+      font-size: 0.75rem; letter-spacing: 0.07em;
       background: rgba(10,22,40,0.65);
-      padding: 8px 14px;
-      border-radius: 6px;
+      padding: 8px 14px; border-radius: 6px;
       border: 1px solid rgba(255,255,255,0.12);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
       transition: background 0.2s, color 0.2s;
     }
     #back a:hover { background: rgba(10,22,40,0.9); color: #fff; }
 
     /* ── Bottom control bar ── */
     #ui {
-      position: fixed;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 10px;
-      z-index: 10;
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 10px; z-index: 10;
     }
-
     .btn {
       padding: 10px 22px;
       background: rgba(10,22,40,0.7);
       color: #e8d5b7;
       border: 1px solid rgba(232,213,183,0.25);
       border-radius: 7px;
-      font-size: 0.72rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
       cursor: pointer;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
       transition: background 0.2s, border-color 0.2s;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
+      -webkit-tap-highlight-color: transparent; user-select: none;
       white-space: nowrap;
     }
     .btn:hover, .btn:active {
@@ -122,25 +102,25 @@
       border-color: rgba(232,213,183,0.6);
     }
 
-    /* ── Hint ── */
+    /* ── Interaction hint ── */
     #hint {
-      position: fixed;
-      top: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      color: rgba(255,255,255,0.55);
-      font-size: 0.68rem;
-      letter-spacing: 0.08em;
+      position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+      color: rgba(255,255,255,0.55); font-size: 0.68rem; letter-spacing: 0.08em;
       background: rgba(10,22,40,0.45);
-      padding: 6px 14px;
-      border-radius: 20px;
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      pointer-events: none;
-      transition: opacity 1s ease;
-      z-index: 10;
+      padding: 6px 14px; border-radius: 20px;
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      pointer-events: none; white-space: nowrap;
+      transition: opacity 1s ease; z-index: 10;
     }
     #hint.hidden { opacity: 0; }
+
+    /* ── Satellite attribution ── */
+    #attribution {
+      position: fixed; bottom: 6px; right: 10px;
+      color: rgba(255,255,255,0.35);
+      font-size: 0.52rem; letter-spacing: 0.04em;
+      z-index: 5; pointer-events: none;
+    }
   </style>
 
   <script type="importmap">
@@ -154,7 +134,6 @@
 </head>
 <body>
 
-<!-- Loading screen -->
 <div id="loading">
   <div id="loading-logo">Seaglass Escape</div>
   <div id="loading-sub">3D House Model</div>
@@ -162,24 +141,25 @@
   <div id="progress-pct">0%</div>
 </div>
 
-<!-- Back to main site -->
-<div id="back">
-  <a href="../index.html">← Back to site</a>
-</div>
+<div id="back"><a href="../index.html">← Back to site</a></div>
 
-<!-- Interaction hint -->
 <div id="hint">Drag to orbit &nbsp;·&nbsp; Scroll to zoom &nbsp;·&nbsp; Right-drag to pan</div>
 
-<!-- Bottom buttons -->
 <div id="ui">
   <button class="btn" id="btn-reset">Reset View</button>
   <button class="btn" id="btn-top">Top View</button>
 </div>
 
+<div id="attribution">Satellite imagery © Esri, Maxar, GeoEye</div>
+
 <script type="module">
 import * as THREE from 'three';
 import { GLTFLoader }    from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+// ── Property GPS ──────────────────────────────────────────────────────────────
+// 27°36'32.8"N  97°12'36.2"W  →  Port Aransas / Corpus Christi coast, TX
+const PROPERTY = { lat: 27.609111, lng: -97.210056, zoom: 18 };
 
 // ── Renderer ──────────────────────────────────────────────────────────────────
 const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -194,72 +174,105 @@ document.body.appendChild(renderer.domElement);
 // ── Scene ─────────────────────────────────────────────────────────────────────
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x87CEEB);
-scene.fog = new THREE.FogExp2(0x9fd4f0, 0.006);
+scene.fog = new THREE.FogExp2(0x9fd4f0, 0.005);
 
 // ── Camera ────────────────────────────────────────────────────────────────────
 const camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.1, 2000);
 camera.position.set(30, 20, 30);
 
 // ── Lights ────────────────────────────────────────────────────────────────────
-// Soft ambient sky glow
-const ambient = new THREE.AmbientLight(0xd0e8ff, 0.55);
-scene.add(ambient);
+scene.add(new THREE.AmbientLight(0xd0e8ff, 0.55));
 
-// Sun (directional, casts shadows)
 const sun = new THREE.DirectionalLight(0xfff5e0, 2.0);
 sun.position.set(50, 80, 40);
 sun.castShadow = true;
 sun.shadow.mapSize.set(2048, 2048);
-sun.shadow.camera.near   = 1;
-sun.shadow.camera.far    = 400;
-sun.shadow.camera.left   = -60;
-sun.shadow.camera.right  =  60;
-sun.shadow.camera.top    =  60;
-sun.shadow.camera.bottom = -60;
+sun.shadow.camera.near   = 1;   sun.shadow.camera.far    = 400;
+sun.shadow.camera.left   = -60; sun.shadow.camera.right  =  60;
+sun.shadow.camera.top    =  60; sun.shadow.camera.bottom = -60;
 sun.shadow.bias = -0.0005;
 scene.add(sun);
 
-// Fill light (opposite side, cooler)
 const fill = new THREE.DirectionalLight(0x8bb8e8, 0.5);
 fill.position.set(-30, 25, -30);
 scene.add(fill);
 
-// Hemisphere for sky/ground bounce
-const hemi = new THREE.HemisphereLight(0x87CEEB, 0x4a7c45, 0.35);
-scene.add(hemi);
+scene.add(new THREE.HemisphereLight(0x87CEEB, 0x4a7c45, 0.35));
 
 // ── Ground plane ──────────────────────────────────────────────────────────────
-const ground = new THREE.Mesh(
-  new THREE.PlaneGeometry(300, 300),
-  new THREE.MeshLambertMaterial({ color: 0x4a8045 })
-);
+// Starts as green; satellite imagery replaces it once tiles load
+const groundMat = new THREE.MeshLambertMaterial({ color: 0x4a8045 });
+const ground = new THREE.Mesh(new THREE.PlaneGeometry(400, 400), groundMat);
 ground.rotation.x = -Math.PI / 2;
-ground.position.y = 0;
 ground.receiveShadow = true;
 scene.add(ground);
 
-// ── OrbitControls ────────────────────────────────────────────────────────────
+// ── OrbitControls ─────────────────────────────────────────────────────────────
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping    = true;
 controls.dampingFactor    = 0.06;
 controls.screenSpacePanning = false;
 controls.minDistance      = 3;
-controls.maxDistance      = 300;
-controls.maxPolarAngle    = Math.PI / 2 - 0.02; // never below ground
+controls.maxDistance      = 400;
+controls.maxPolarAngle    = Math.PI / 2 - 0.02;
 
-// ── Camera state ─────────────────────────────────────────────────────────────
+// ── Satellite tile helpers ────────────────────────────────────────────────────
+function latLngToTile(lat, lng, zoom) {
+  const n      = Math.pow(2, zoom);
+  const x      = Math.floor((lng + 180) / 360 * n);
+  const latRad = lat * Math.PI / 180;
+  const y      = Math.floor(
+    (1 - Math.log(Math.tan(latRad) + 1 / Math.cos(latRad)) / Math.PI) / 2 * n
+  );
+  return { x, y };
+}
+
+async function loadSatelliteTexture(gridSize = 5) {
+  const TILE_PX = 256;
+  const dim = TILE_PX * gridSize;
+  const canvas = document.createElement('canvas');
+  canvas.width = dim; canvas.height = dim;
+  const ctx = canvas.getContext('2d');
+
+  const center = latLngToTile(PROPERTY.lat, PROPERTY.lng, PROPERTY.zoom);
+  const half   = Math.floor(gridSize / 2);
+
+  const loads = [];
+  for (let row = 0; row < gridSize; row++) {
+    for (let col = 0; col < gridSize; col++) {
+      const tx = center.x + (col - half);
+      const ty = center.y + (row - half);
+      // ESRI World Imagery — CORS enabled, no API key required
+      const url = `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${PROPERTY.zoom}/${ty}/${tx}`;
+
+      loads.push(new Promise(resolve => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload  = () => { ctx.drawImage(img, col * TILE_PX, row * TILE_PX); resolve(true); };
+        img.onerror = () => resolve(false);
+        img.src = url;
+      }));
+    }
+  }
+
+  const results = await Promise.all(loads);
+  if (!results.some(Boolean)) return null; // all tiles failed
+
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+  return tex;
+}
+
+// ── Camera state ──────────────────────────────────────────────────────────────
 let defaultPos    = camera.position.clone();
 let defaultTarget = new THREE.Vector3();
 
 function fitCameraToModel(model) {
-  // Compute initial bounding box
   const box  = new THREE.Box3().setFromObject(model);
   const size = box.getSize(new THREE.Vector3());
 
-  // Seat the model on the ground plane (y = 0)
+  // Seat model on ground (y = 0)
   model.position.y -= box.min.y;
-
-  // Recompute after repositioning
   box.setFromObject(model);
   const center = box.getCenter(new THREE.Vector3());
   box.getSize(size);
@@ -268,9 +281,9 @@ function fitCameraToModel(model) {
   const fov    = camera.fov * (Math.PI / 180);
   const dist   = ((maxDim / 2) / Math.tan(fov / 2)) * 2.0;
 
-  // Position camera at 30° elevation, looking at center
-  const theta = Math.PI / 4; // 45° azimuth
-  const phi   = Math.PI / 6; // 30° elevation
+  // 30° elevation, 45° azimuth
+  const phi   = Math.PI / 6;
+  const theta = Math.PI / 4;
   camera.position.set(
     center.x + dist * Math.sin(phi) * Math.cos(theta),
     center.y + dist * Math.cos(phi) * 0.9,
@@ -280,58 +293,58 @@ function fitCameraToModel(model) {
   controls.target.copy(center);
   controls.update();
 
-  // Expand shadow frustum to cover the model
-  const h = maxDim * 0.75;
-  sun.shadow.camera.left   = -h;
-  sun.shadow.camera.right  =  h;
-  sun.shadow.camera.top    =  h;
-  sun.shadow.camera.bottom = -h;
+  // Expand shadow frustum to model size
+  const h = maxDim * 0.8;
+  sun.shadow.camera.left   = -h; sun.shadow.camera.right  =  h;
+  sun.shadow.camera.top    =  h; sun.shadow.camera.bottom = -h;
   sun.shadow.camera.far    = dist * 5;
   sun.shadow.camera.updateProjectionMatrix();
+
+  // Resize ground to cover the satellite image area (~30× model footprint)
+  const groundExtent = Math.max(maxDim * 30, 400);
+  ground.geometry.dispose();
+  ground.geometry = new THREE.PlaneGeometry(groundExtent, groundExtent);
 
   // Store reset state
   defaultPos    = camera.position.clone();
   defaultTarget = center.clone();
+
+  // Async load satellite tiles and apply as ground texture
+  loadSatelliteTexture(5).then(tex => {
+    if (!tex) return; // stay green on failure
+    groundMat.map = tex;
+    groundMat.color.setHex(0xffffff); // let the texture show true colors
+    groundMat.needsUpdate = true;
+  });
 }
 
-// ── Load the model ────────────────────────────────────────────────────────────
-const fill$   = document.getElementById('progress-fill');
-const pctEl   = document.getElementById('progress-pct');
-const loadEl  = document.getElementById('loading');
+// ── Load the 3D model ─────────────────────────────────────────────────────────
+const fillEl   = document.getElementById('progress-fill');
+const pctEl    = document.getElementById('progress-pct');
+const loadEl   = document.getElementById('loading');
 
 const loader = new GLTFLoader();
 loader.load(
   '../Assets/Renders/HOUSE%20MODEL.glb',
   (gltf) => {
     const model = gltf.scene;
-
     model.traverse(node => {
       if (node.isMesh) {
         node.castShadow    = true;
         node.receiveShadow = true;
-        // Ensure double-sided rendering for any thin surfaces
-        if (node.material) {
-          node.material.side = THREE.FrontSide;
-        }
       }
     });
-
     scene.add(model);
     fitCameraToModel(model);
 
-    // Fade out loading screen
     loadEl.classList.add('fade-out');
     setTimeout(() => { loadEl.style.display = 'none'; }, 700);
-
-    // Auto-hide hint after 5 s
-    setTimeout(() => {
-      document.getElementById('hint').classList.add('hidden');
-    }, 5000);
+    setTimeout(() => { document.getElementById('hint').classList.add('hidden'); }, 5000);
   },
   (xhr) => {
     if (xhr.total) {
       const pct = Math.round((xhr.loaded / xhr.total) * 100);
-      fill$.style.width  = pct + '%';
+      fillEl.style.width = pct + '%';
       pctEl.textContent  = pct + '%';
     }
   },
@@ -341,7 +354,7 @@ loader.load(
   }
 );
 
-// ── UI Buttons ────────────────────────────────────────────────────────────────
+// ── UI buttons ────────────────────────────────────────────────────────────────
 document.getElementById('btn-reset').addEventListener('click', () => {
   camera.position.copy(defaultPos);
   controls.target.copy(defaultTarget);
@@ -351,7 +364,6 @@ document.getElementById('btn-reset').addEventListener('click', () => {
 document.getElementById('btn-top').addEventListener('click', () => {
   const tgt  = controls.target.clone();
   const dist = camera.position.distanceTo(tgt) * 1.1;
-  // Bird's-eye: directly above target, slight z offset so camera "up" is defined
   camera.position.set(tgt.x, tgt.y + dist, tgt.z + 0.001);
   controls.target.copy(tgt);
   controls.update();
