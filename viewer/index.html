@@ -164,7 +164,9 @@ sun.shadow.camera.top  =  60; sun.shadow.camera.bottom = -60;
 sun.shadow.bias = -0.0005;
 scene.add(sun);
 
-scene.add(new THREE.DirectionalLight(0x8bb8e8, 0.5)).position.set(-30, 25, -30);
+const fillLight = new THREE.DirectionalLight(0x8bb8e8, 0.5);
+fillLight.position.set(-30, 25, -30);
+scene.add(fillLight);
 scene.add(new THREE.HemisphereLight(0x87CEEB, 0x4a7c45, 0.35));
 
 // ── Ground plane (satellite imagery applied after load) ───────────────────────
