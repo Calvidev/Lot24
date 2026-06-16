@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>Seaglass Escape — 3D Viewer</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100%; height: 100%;
+      overflow: hidden;
+      background: #87CEEB;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif;
+    }
+
+    canvas { display: block; touch-action: none; }
+
+    /* ── Loading overlay ── */
+    #loading {
+      position: fixed; inset: 0;
+      background: #0a1628;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      z-index: 200; transition: opacity 0.6s ease;
+    }
+    #loading.fade-out { opacity: 0; pointer-events: none; }
+    #loading-logo { color: #e8d5b7; font-size: 1.5rem; font-weight: 300; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 0.4rem; }
+    #loading-sub  { color: rgba(232,213,183,0.45); font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 2.5rem; }
+    #progress-track { width: 180px; height: 2px; background: rgba(255,255,255,0.12); border-radius: 2px; overflow: hidden; }
+    #progress-fill  { height: 100%; width: 0%; background: #e8d5b7; border-radius: 2px; transition: width 0.15s ease; }
+    #progress-pct   { color: rgba(255,255,255,0.3); font-size: 0.68rem; letter-spacing: 0.1em; margin-top: 0.9rem; }
+
+    /* ── Back link ── */
+    #back { position: fixed; top: 16px; left: 16px; z-index: 10; }
+    #back a {
+      display: inline-flex; align-items: center; gap: 5px;
+      color: rgba(255,255,255,0.9); text-decoration: none;
+      font-size: 0.75rem; letter-spacing: 0.07em;
+      background: rgba(10,22,40,0.65); padding: 8px 14px;
+      border-radius: 6px; border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      transition: background 0.2s;
+    }
+    #back a:hover { background: rgba(10,22,40,0.9); color: #fff; }
+
+    /* ── Bottom control bar ── */
+    #ui { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 10; }
+    .btn {
+      padding: 10px 22px;
+      background: rgba(10,22,40,0.7); color: #e8d5b7;
+      border: 1px solid rgba(232,213,183,0.25); border-radius: 7px;
+      font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+      cursor: pointer; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      transition: background 0.2s, border-color 0.2s;
+      -webkit-tap-highlight-color: transparent; user-select: none; white-space: nowrap;
+    }
+    .btn:hover, .btn:active { background: rgba(10,22,40,0.95); border-color: rgba(232,213,183,0.6); }
+
+    /* ── Hint / placement info ── */
+    #hint {
+      position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+      color: rgba(255,255,255,0.55); font-size: 0.68rem; letter-spacing: 0.08em;
+      background: rgba(10,22,40,0.45); padding: 6px 14px; border-radius: 20px;
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      pointer-events: none; white-space: nowrap;
+      transition: opacity 1s ease; z-index: 10;
+    }
+    #hint.hidden { opacity: 0; }
+
+    /* ── Attribution ── */
+    #attribution {
+      position: fixed; bottom: 6px; right: 10px;
+      color: rgba(255,255,255,0.35); font-size: 0.52rem; letter-spacing: 0.04em;
+      z-index: 5; pointer-events: none;
+    }
+  </style>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+
+<div id="loading">
+  <div id="loading-logo">Seaglass Escape</div>
+  <div id="loading-sub">3D House Model</div>
+  <div id="progress-track"><div id="progress-fill"></div></div>
+  <div id="progress-pct">0%</div>
+</div>
+
+<div id="back"><a href="../index.html">← Back to site</a></div>
+
+<div id="hint">Drag to orbit &nbsp;·&nbsp; Scroll to zoom &nbsp;·&nbsp; Right-drag to pan</div>
+
+<div id="ui">
+  <button class="btn" id="btn-reset">Reset View</button>
+  <button class="btn" id="btn-top">Top View</button>
+</div>
+
+<div id="attribution">Satellite imagery © Esri, Maxar, GeoEye</div>
+
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader }    from 'three/addons/loaders/GLTFLoader.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+// ── Property GPS (center of satellite image = world origin) ───────────────────
+const PROPERTY = { lat: 27.609111, lng: -97.210056, zoom: 17 };
+
+// ── Renderer ──────────────────────────────────────────────────────────────────
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+document.body.appendChild(renderer.domElement);
+
+// ── Scene ─────────────────────────────────────────────────────────────────────
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x87CEEB);
+
+// ── Camera ────────────────────────────────────────────────────────────────────
+const camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.1, 2000);
+camera.position.set(30, 20, 30);
+
+// ── Lights ────────────────────────────────────────────────────────────────────
+scene.add(new THREE.AmbientLight(0xd0e8ff, 0.55));
+
+const sun = new THREE.DirectionalLight(0xfff5e0, 2.0);
+sun.position.set(50, 80, 40);
+sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048);
+sun.shadow.camera.near = 1;   sun.shadow.camera.far    = 400;
+sun.shadow.camera.left = -60; sun.shadow.camera.right  =  60;
+sun.shadow.camera.top  =  60; sun.shadow.camera.bottom = -60;
+sun.shadow.bias = -0.0005;
+scene.add(sun);
+
+const fillLight = new THREE.DirectionalLight(0x8bb8e8, 0.5);
+fillLight.position.set(-30, 25, -30);
+scene.add(fillLight);
+scene.add(new THREE.HemisphereLight(0x87CEEB, 0x4a7c45, 0.35));
+
+// ── Ground plane (satellite imagery applied after load) ───────────────────────
+const groundMat = new THREE.MeshBasicMaterial({ color: 0x8aab7a });
+const ground = new THREE.Mesh(new THREE.PlaneGeometry(800, 800), groundMat);
+ground.rotation.x = -Math.PI / 2;
+ground.receiveShadow = true;
+scene.add(ground);
+
+// ── OrbitControls ─────────────────────────────────────────────────────────────
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping    = true;
+controls.dampingFactor    = 0.06;
+controls.screenSpacePanning = false;
+controls.minDistance      = 3;
+controls.maxDistance      = 800;
+controls.maxPolarAngle    = Math.PI / 2 - 0.02;
+
+// ── Satellite tile helpers ────────────────────────────────────────────────────
+function latLngToTile(lat, lng, zoom) {
+  const n      = Math.pow(2, zoom);
+  const x      = Math.floor((lng + 180) / 360 * n);
+  const latRad = lat * Math.PI / 180;
+  const y      = Math.floor(
+    (1 - Math.log(Math.tan(latRad) + 1 / Math.cos(latRad)) / Math.PI) / 2 * n
+  );
+  return { x, y };
+}
+
+async function loadSatelliteTexture(gridSize = 7) {
+  const TILE_PX = 256;
+  const dim = TILE_PX * gridSize;
+  const canvas = document.createElement('canvas');
+  canvas.width = dim; canvas.height = dim;
+  const ctx = canvas.getContext('2d');
+
+  const center = latLngToTile(PROPERTY.lat, PROPERTY.lng, PROPERTY.zoom);
+  const half   = Math.floor(gridSize / 2);
+
+  const loads = [];
+  for (let row = 0; row < gridSize; row++) {
+    for (let col = 0; col < gridSize; col++) {
+      const tx = center.x + (col - half);
+      const ty = center.y + (row - half);
+      const url = `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${PROPERTY.zoom}/${ty}/${tx}`;
+
+      loads.push(new Promise(resolve => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload  = () => { ctx.drawImage(img, col * TILE_PX, row * TILE_PX); resolve(true); };
+        img.onerror = () => resolve(false);
+        img.src = url;
+      }));
+    }
+  }
+
+  const results = await Promise.all(loads);
+  if (!results.some(Boolean)) return null;
+
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+  return tex;
+}
+
+// ── Camera / model state ──────────────────────────────────────────────────────
+let defaultPos    = camera.position.clone();
+let defaultTarget = new THREE.Vector3();
+let houseModel    = null;
+
+function fitCameraToModel(model) {
+  const box    = new THREE.Box3().setFromObject(model);
+  const size   = box.getSize(new THREE.Vector3());
+  const center = box.getCenter(new THREE.Vector3());
+
+  // Center on GPS origin, apply calibrated placement offset, seat on ground
+  model.position.x -= center.x;
+  model.position.z -= center.z;
+  model.position.y -= box.min.y;
+  model.position.x += 48.19;
+  model.position.z += 13.41;
+  model.rotation.y = -115.0 * Math.PI / 180;
+
+  box.setFromObject(model);
+  box.getCenter(center);
+  box.getSize(size);
+
+  const maxDim = Math.max(size.x, size.y, size.z);
+  const fov    = camera.fov * (Math.PI / 180);
+  const dist   = ((maxDim / 2) / Math.tan(fov / 2)) * 2.0;
+
+  const phi = Math.PI / 6, theta = Math.PI / 4;
+  camera.position.set(
+    center.x + dist * Math.sin(phi) * Math.cos(theta),
+    center.y + dist * Math.cos(phi) * 0.9,
+    center.z + dist * Math.sin(phi) * Math.sin(theta)
+  );
+  camera.lookAt(center);
+  controls.target.copy(center);
+  controls.update();
+
+  const h = maxDim * 0.8;
+  sun.shadow.camera.left = -h; sun.shadow.camera.right  =  h;
+  sun.shadow.camera.top  =  h; sun.shadow.camera.bottom = -h;
+  sun.shadow.camera.far  = dist * 5;
+  sun.shadow.camera.updateProjectionMatrix();
+
+  ground.geometry.dispose();
+  ground.geometry = new THREE.PlaneGeometry(maxDim * 80, maxDim * 80);
+
+  defaultPos    = camera.position.clone();
+  defaultTarget = center.clone();
+
+  loadSatelliteTexture(7).then(tex => {
+    if (!tex) return;
+    groundMat.map = tex;
+    groundMat.color.setHex(0xffffff);
+    groundMat.needsUpdate = true;
+  });
+}
+
+// ── Load model ────────────────────────────────────────────────────────────────
+const fillEl = document.getElementById('progress-fill');
+const pctEl  = document.getElementById('progress-pct');
+const loadEl = document.getElementById('loading');
+
+new GLTFLoader().load(
+  '../Assets/Renders/HOUSE%20MODEL.glb',
+  (gltf) => {
+    houseModel = gltf.scene;
+    houseModel.traverse(node => {
+      if (node.isMesh) { node.castShadow = true; node.receiveShadow = true; }
+    });
+    scene.add(houseModel);
+    fitCameraToModel(houseModel);
+    loadEl.classList.add('fade-out');
+    setTimeout(() => { loadEl.style.display = 'none'; }, 700);
+    setTimeout(() => { document.getElementById('hint').classList.add('hidden'); }, 5000);
+  },
+  (xhr) => {
+    if (xhr.total) {
+      const pct = Math.round((xhr.loaded / xhr.total) * 100);
+      fillEl.style.width = pct + '%';
+      pctEl.textContent  = pct + '%';
+    }
+  },
+  (err) => { pctEl.textContent = 'Error loading model.'; console.error(err); }
+);
+
+// ── UI ────────────────────────────────────────────────────────────────────────
+document.getElementById('btn-reset').addEventListener('click', () => {
+  camera.position.copy(defaultPos);
+  controls.target.copy(defaultTarget);
+  controls.update();
+});
+
+document.getElementById('btn-top').addEventListener('click', () => {
+  const tgt  = controls.target.clone();
+  const dist = camera.position.distanceTo(tgt) * 1.1;
+  camera.position.set(tgt.x, tgt.y + dist, tgt.z + 0.001);
+  controls.target.copy(tgt);
+  controls.update();
+});
+
+// ── Resize ────────────────────────────────────────────────────────────────────
+window.addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+
+// ── Render loop ───────────────────────────────────────────────────────────────
+(function animate() {
+  requestAnimationFrame(animate);
+  controls.update();
+  renderer.render(scene, camera);
+})();
+</script>
+</body>
+</html>
