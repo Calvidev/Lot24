@@ -1,4 +1,5 @@
 {
   "furniture": [
-    { "name": "sofa", "file": "sofa.glb" }]
+    { "name": "Sofa", "file": "sofa.glb" }
+  ]
 }
