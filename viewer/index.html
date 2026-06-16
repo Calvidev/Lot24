@@ -159,7 +159,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 // ── Property GPS ──────────────────────────────────────────────────────────────
 // 27°36'32.8"N  97°12'36.2"W  →  Port Aransas / Corpus Christi coast, TX
-const PROPERTY = { lat: 27.609111, lng: -97.210056, zoom: 18 };
+const PROPERTY = { lat: 27.609111, lng: -97.210056, zoom: 17 };
 
 // ── Renderer ──────────────────────────────────────────────────────────────────
 const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -306,7 +306,7 @@ function fitCameraToModel(model) {
   sun.shadow.camera.updateProjectionMatrix();
 
   // Resize ground to cover the satellite image area (~30× model footprint)
-  const groundExtent = Math.max(maxDim * 30, 400);
+  const groundExtent = Math.max(maxDim * 80, 800);
   ground.geometry.dispose();
   ground.geometry = new THREE.PlaneGeometry(groundExtent, groundExtent);
 
@@ -315,7 +315,7 @@ function fitCameraToModel(model) {
   defaultTarget = center.clone();
 
   // Async load satellite tiles and apply as ground texture
-  loadSatelliteTexture(5).then(tex => {
+  loadSatelliteTexture(7).then(tex => {
     if (!tex) return; // stay green on failure
     groundMat.map = tex;
     groundMat.color.setHex(0xffffff); // let the texture show true colors
