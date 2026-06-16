@@ -174,7 +174,7 @@ document.body.appendChild(renderer.domElement);
 // ── Scene ─────────────────────────────────────────────────────────────────────
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x87CEEB);
-scene.fog = new THREE.FogExp2(0x9fd4f0, 0.005);
+// no fog — keeps satellite imagery crisp
 
 // ── Camera ────────────────────────────────────────────────────────────────────
 const camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.1, 2000);
@@ -200,8 +200,8 @@ scene.add(fill);
 scene.add(new THREE.HemisphereLight(0x87CEEB, 0x4a7c45, 0.35));
 
 // ── Ground plane ──────────────────────────────────────────────────────────────
-// Starts as green; satellite imagery replaces it once tiles load
-const groundMat = new THREE.MeshLambertMaterial({ color: 0x4a8045 });
+// Unlit material so satellite texture renders at true colors (no lighting wash)
+const groundMat = new THREE.MeshBasicMaterial({ color: 0x4a8045 });
 const ground = new THREE.Mesh(new THREE.PlaneGeometry(400, 400), groundMat);
 ground.rotation.x = -Math.PI / 2;
 ground.receiveShadow = true;
@@ -270,11 +270,16 @@ let defaultTarget = new THREE.Vector3();
 function fitCameraToModel(model) {
   const box  = new THREE.Box3().setFromObject(model);
   const size = box.getSize(new THREE.Vector3());
-
-  // Seat model on ground (y = 0)
-  model.position.y -= box.min.y;
-  box.setFromObject(model);
   const center = box.getCenter(new THREE.Vector3());
+
+  // Center model on satellite image (XZ) and seat it on ground (Y)
+  model.position.x -= center.x;
+  model.position.y -= box.min.y;
+  model.position.z -= center.z;
+
+  // Recompute after repositioning
+  box.setFromObject(model);
+  box.getCenter(center);
   box.getSize(size);
 
   const maxDim = Math.max(size.x, size.y, size.z);
