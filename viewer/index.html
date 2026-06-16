@@ -56,7 +56,6 @@
       -webkit-tap-highlight-color: transparent; user-select: none; white-space: nowrap;
     }
     .btn:hover, .btn:active { background: rgba(10,22,40,0.95); border-color: rgba(232,213,183,0.6); }
-    .btn.active { background: rgba(232,213,183,0.2); border-color: rgba(232,213,183,0.8); color: #fff; }
 
     /* ── Hint / placement info ── */
     #hint {
@@ -68,19 +67,6 @@
       transition: opacity 1s ease; z-index: 10;
     }
     #hint.hidden { opacity: 0; }
-
-    /* ── Placement info panel ── */
-    #place-info {
-      position: fixed; top: 56px; left: 50%; transform: translateX(-50%);
-      background: rgba(10,22,40,0.85); color: #e8d5b7;
-      font-size: 0.7rem; letter-spacing: 0.07em;
-      padding: 10px 18px; border-radius: 8px; border: 1px solid rgba(232,213,183,0.3);
-      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-      text-align: center; line-height: 1.8; white-space: nowrap;
-      display: none; z-index: 10;
-    }
-    #place-info span { opacity: 0.5; }
-    #place-coords { font-family: monospace; color: #fff; }
 
     /* ── Attribution ── */
     #attribution {
@@ -112,15 +98,9 @@
 
 <div id="hint">Drag to orbit &nbsp;·&nbsp; Scroll to zoom &nbsp;·&nbsp; Right-drag to pan</div>
 
-<div id="place-info">
-  <span>PLACEMENT MODE &nbsp;·&nbsp; Click map to place &nbsp;·&nbsp; ↑↓←→ nudge &nbsp;·&nbsp; Q/E rotate &nbsp;·&nbsp; Shift = fine</span><br>
-  <span>offset</span> <span id="place-coords">x=0.00 &nbsp; z=0.00 &nbsp; rot=0.0°</span>
-</div>
-
 <div id="ui">
   <button class="btn" id="btn-reset">Reset View</button>
   <button class="btn" id="btn-top">Top View</button>
-  <button class="btn" id="btn-place">Place House</button>
 </div>
 
 <div id="attribution">Satellite imagery © Esri, Maxar, GeoEye</div>
@@ -241,10 +221,13 @@ function fitCameraToModel(model) {
   const size   = box.getSize(new THREE.Vector3());
   const center = box.getCenter(new THREE.Vector3());
 
-  // Center model on satellite image (XZ) and seat on ground (Y)
+  // Center on GPS origin, apply calibrated placement offset, seat on ground
   model.position.x -= center.x;
-  model.position.y -= box.min.y;
   model.position.z -= center.z;
+  model.position.y -= box.min.y;
+  model.position.x += 48.19;
+  model.position.z += 13.41;
+  model.rotation.y = -115.0 * Math.PI / 180;
 
   box.setFromObject(model);
   box.getCenter(center);
@@ -312,61 +295,7 @@ new GLTFLoader().load(
   (err) => { pctEl.textContent = 'Error loading model.'; console.error(err); }
 );
 
-// ── Placement mode ────────────────────────────────────────────────────────────
-let placementMode = false;
-const raycaster   = new THREE.Raycaster();
-const mouse2d     = new THREE.Vector2();
-const groundPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
-const placeInfo   = document.getElementById('place-info');
-const placeCoords = document.getElementById('place-coords');
-
-function updatePlaceCoords() {
-  if (!houseModel) return;
-  const x   = houseModel.position.x.toFixed(2);
-  const z   = houseModel.position.z.toFixed(2);
-  const rot = (houseModel.rotation.y * 180 / Math.PI).toFixed(1);
-  placeCoords.textContent = `x=${x}  z=${z}  rot=${rot}°`;
-}
-
-document.getElementById('btn-place').addEventListener('click', () => {
-  placementMode = !placementMode;
-  document.getElementById('btn-place').classList.toggle('active', placementMode);
-  placeInfo.style.display = placementMode ? 'block' : 'none';
-  controls.enabled = !placementMode;
-  if (placementMode) updatePlaceCoords();
-});
-
-// Click on ground to place house
-renderer.domElement.addEventListener('click', (e) => {
-  if (!placementMode || !houseModel) return;
-  mouse2d.x = (e.clientX / innerWidth)  *  2 - 1;
-  mouse2d.y = (e.clientY / innerHeight) * -2 + 1;
-  raycaster.setFromCamera(mouse2d, camera);
-  const hit = new THREE.Vector3();
-  if (raycaster.ray.intersectPlane(groundPlane, hit)) {
-    houseModel.position.x = hit.x;
-    houseModel.position.z = hit.z;
-    updatePlaceCoords();
-  }
-});
-
-// Arrow keys to nudge, Q/E to rotate
-document.addEventListener('keydown', (e) => {
-  if (!placementMode || !houseModel) return;
-  const step = e.shiftKey ? 0.2 : 2;
-  const rStep = e.shiftKey ? 1 : 5;
-  let used = true;
-  if (e.key === 'ArrowLeft')  houseModel.position.x -= step;
-  else if (e.key === 'ArrowRight') houseModel.position.x += step;
-  else if (e.key === 'ArrowUp')    houseModel.position.z -= step;
-  else if (e.key === 'ArrowDown')  houseModel.position.z += step;
-  else if (e.key === 'q' || e.key === 'Q') houseModel.rotation.y -= rStep * Math.PI / 180;
-  else if (e.key === 'e' || e.key === 'E') houseModel.rotation.y += rStep * Math.PI / 180;
-  else used = false;
-  if (used) { e.preventDefault(); updatePlaceCoords(); }
-});
-
-// ── Standard UI ───────────────────────────────────────────────────────────────
+// ── UI ────────────────────────────────────────────────────────────────────────
 document.getElementById('btn-reset').addEventListener('click', () => {
   camera.position.copy(defaultPos);
   controls.target.copy(defaultTarget);
