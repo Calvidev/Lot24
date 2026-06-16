@@ -8,21 +8,17 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     html, body {
-      width: 100%; height: 100%;
-      overflow: hidden;
+      width: 100%; height: 100%; overflow: hidden;
       background: #87CEEB;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif;
     }
-
     canvas { display: block; touch-action: none; }
 
-    /* ── Loading overlay ── */
+    /* ── Loading ── */
     #loading {
-      position: fixed; inset: 0;
-      background: #0a1628;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      z-index: 200; transition: opacity 0.6s ease;
+      position: fixed; inset: 0; background: #0a1628;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      z-index: 300; transition: opacity 0.6s ease;
     }
     #loading.fade-out { opacity: 0; pointer-events: none; }
     #loading-logo { color: #e8d5b7; font-size: 1.5rem; font-weight: 300; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 0.4rem; }
@@ -32,23 +28,30 @@
     #progress-pct   { color: rgba(255,255,255,0.3); font-size: 0.68rem; letter-spacing: 0.1em; margin-top: 0.9rem; }
 
     /* ── Back link ── */
-    #back { position: fixed; top: 16px; left: 16px; z-index: 10; }
+    #back { position: fixed; top: 16px; left: 16px; z-index: 20; }
     #back a {
-      display: inline-flex; align-items: center; gap: 5px;
-      color: rgba(255,255,255,0.9); text-decoration: none;
-      font-size: 0.75rem; letter-spacing: 0.07em;
-      background: rgba(10,22,40,0.65); padding: 8px 14px;
-      border-radius: 6px; border: 1px solid rgba(255,255,255,0.12);
-      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-      transition: background 0.2s;
+      display: inline-flex; align-items: center; gap: 5px; color: rgba(255,255,255,0.9);
+      text-decoration: none; font-size: 0.75rem; letter-spacing: 0.07em;
+      background: rgba(10,22,40,0.65); padding: 8px 14px; border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transition: background 0.2s;
     }
-    #back a:hover { background: rgba(10,22,40,0.9); color: #fff; }
+    #back a:hover { background: rgba(10,22,40,0.9); }
 
-    /* ── Bottom control bar ── */
-    #ui { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 10; }
+    /* ── Hint ── */
+    #hint {
+      position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+      color: rgba(255,255,255,0.55); font-size: 0.68rem; letter-spacing: 0.08em;
+      background: rgba(10,22,40,0.45); padding: 6px 14px; border-radius: 20px;
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      pointer-events: none; white-space: nowrap; transition: opacity 1s ease; z-index: 20;
+    }
+    #hint.hidden { opacity: 0; }
+
+    /* ── Bottom bar ── */
+    #ui { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 20; }
     .btn {
-      padding: 10px 22px;
-      background: rgba(10,22,40,0.7); color: #e8d5b7;
+      padding: 10px 22px; background: rgba(10,22,40,0.7); color: #e8d5b7;
       border: 1px solid rgba(232,213,183,0.25); border-radius: 7px;
       font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
       cursor: pointer; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
@@ -57,23 +60,100 @@
     }
     .btn:hover, .btn:active { background: rgba(10,22,40,0.95); border-color: rgba(232,213,183,0.6); }
 
-    /* ── Hint / placement info ── */
-    #hint {
-      position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
-      color: rgba(255,255,255,0.55); font-size: 0.68rem; letter-spacing: 0.08em;
-      background: rgba(10,22,40,0.45); padding: 6px 14px; border-radius: 20px;
-      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
-      pointer-events: none; white-space: nowrap;
-      transition: opacity 1s ease; z-index: 10;
+    /* ── Panel toggle ── */
+    #panel-toggle {
+      position: fixed; top: 16px; right: 16px; z-index: 20;
+      padding: 8px 14px; background: rgba(10,22,40,0.7); color: #e8d5b7;
+      border: 1px solid rgba(232,213,183,0.25); border-radius: 7px;
+      font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+      cursor: pointer; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      transition: background 0.2s; white-space: nowrap;
     }
-    #hint.hidden { opacity: 0; }
+    #panel-toggle:hover { background: rgba(10,22,40,0.95); }
 
-    /* ── Attribution ── */
-    #attribution {
-      position: fixed; bottom: 6px; right: 10px;
-      color: rgba(255,255,255,0.35); font-size: 0.52rem; letter-spacing: 0.04em;
-      z-index: 5; pointer-events: none;
+    /* ── Furniture panel ── */
+    #panel {
+      position: fixed; top: 0; right: 0; bottom: 0; width: 230px;
+      background: rgba(8,18,36,0.92);
+      border-left: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      display: flex; flex-direction: column;
+      z-index: 10; transform: translateX(0); transition: transform 0.3s ease;
     }
+    #panel.collapsed { transform: translateX(100%); }
+
+    #panel-header {
+      padding: 52px 14px 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      color: #e8d5b7; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
+    }
+    #panel-body {
+      flex: 1; overflow-y: auto; padding: 12px;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    #panel-body::-webkit-scrollbar { width: 3px; }
+    #panel-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+
+    /* Catalog items */
+    .furn-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 9px 12px; background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07); border-radius: 6px; cursor: default;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .furn-item:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.13); }
+    .furn-name { color: rgba(255,255,255,0.8); font-size: 0.73rem; }
+    .furn-add {
+      width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0;
+      background: rgba(232,213,183,0.12); border: 1px solid rgba(232,213,183,0.3);
+      color: #e8d5b7; font-size: 1.1rem; line-height: 1; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: background 0.15s;
+    }
+    .furn-add:hover { background: rgba(232,213,183,0.28); }
+
+    .empty-msg { color: rgba(255,255,255,0.3); font-size: 0.7rem; line-height: 1.7; text-align: center; padding: 16px 6px; }
+
+    .panel-divider { height: 1px; background: rgba(255,255,255,0.08); margin: 4px 0; flex-shrink: 0; }
+    .section-label { color: rgba(255,255,255,0.3); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 2px 0 4px; }
+
+    /* Transform controls */
+    #furn-controls { display: none; flex-direction: column; gap: 6px; }
+    #mode-btns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px; }
+    .mode-btn {
+      padding: 7px 4px; background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 5px;
+      color: rgba(255,255,255,0.5); font-size: 0.64rem; letter-spacing: 0.05em;
+      text-transform: uppercase; cursor: pointer; text-align: center;
+      line-height: 1.4; transition: all 0.15s;
+    }
+    .mode-btn:hover  { background: rgba(255,255,255,0.1); }
+    .mode-btn.active { background: rgba(232,213,183,0.15); border-color: rgba(232,213,183,0.5); color: #e8d5b7; }
+    .key-hint { font-size: 0.52rem; opacity: 0.4; display: block; }
+
+    #btn-delete-furn {
+      padding: 8px; background: rgba(180,60,60,0.18);
+      border: 1px solid rgba(180,60,60,0.35); border-radius: 5px;
+      color: rgba(255,110,110,0.85); font-size: 0.67rem; letter-spacing: 0.08em;
+      text-transform: uppercase; cursor: pointer; transition: background 0.15s;
+    }
+    #btn-delete-furn:hover { background: rgba(180,60,60,0.38); }
+
+    /* Layout buttons */
+    .layout-btn {
+      padding: 9px; background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 5px;
+      color: rgba(255,255,255,0.65); font-size: 0.67rem; letter-spacing: 0.08em;
+      text-transform: uppercase; cursor: pointer; transition: background 0.15s; text-align: center;
+    }
+    .layout-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+    /* Attribution */
+    #attribution {
+      position: fixed; bottom: 6px; right: 238px;
+      color: rgba(255,255,255,0.3); font-size: 0.52rem;
+      z-index: 5; pointer-events: none; transition: right 0.3s;
+    }
+    #panel.collapsed ~ #attribution { right: 10px; }
   </style>
 
   <script type="importmap">
@@ -95,7 +175,6 @@
 </div>
 
 <div id="back"><a href="../index.html">← Back to site</a></div>
-
 <div id="hint">Drag to orbit &nbsp;·&nbsp; Scroll to zoom &nbsp;·&nbsp; Right-drag to pan</div>
 
 <div id="ui">
@@ -103,14 +182,43 @@
   <button class="btn" id="btn-top">Top View</button>
 </div>
 
+<button id="panel-toggle">Furniture ▸</button>
+
+<div id="panel" class="collapsed">
+  <div id="panel-header">Furniture Staging</div>
+  <div id="panel-body">
+
+    <div id="catalog"></div>
+
+    <div class="panel-divider"></div>
+
+    <div id="furn-controls">
+      <div class="section-label">Transform mode</div>
+      <div id="mode-btns">
+        <button class="mode-btn active" data-mode="translate">Move<span class="key-hint">W</span></button>
+        <button class="mode-btn" data-mode="rotate">Rotate<span class="key-hint">E</span></button>
+        <button class="mode-btn" data-mode="scale">Scale<span class="key-hint">R</span></button>
+      </div>
+      <button id="btn-delete-furn">⌫ Delete selected</button>
+      <div class="panel-divider"></div>
+    </div>
+
+    <div class="section-label">Layout</div>
+    <button class="layout-btn" id="btn-save-layout">↓ Save Layout</button>
+    <button class="layout-btn" id="btn-load-layout">↑ Load Layout</button>
+
+  </div>
+</div>
+
 <div id="attribution">Satellite imagery © Esri, Maxar, GeoEye</div>
 
 <script type="module">
 import * as THREE from 'three';
-import { GLTFLoader }    from 'three/addons/loaders/GLTFLoader.js';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFLoader }        from 'three/addons/loaders/GLTFLoader.js';
+import { OrbitControls }     from 'three/addons/controls/OrbitControls.js';
+import { TransformControls } from 'three/addons/controls/TransformControls.js';
 
-// ── Property GPS (center of satellite image = world origin) ───────────────────
+// ── Property GPS ──────────────────────────────────────────────────────────────
 const PROPERTY = { lat: 27.609111, lng: -97.210056, zoom: 17 };
 
 // ── Renderer ──────────────────────────────────────────────────────────────────
@@ -147,9 +255,10 @@ scene.add(sun);
 const fillLight = new THREE.DirectionalLight(0x8bb8e8, 0.5);
 fillLight.position.set(-30, 25, -30);
 scene.add(fillLight);
+
 scene.add(new THREE.HemisphereLight(0x87CEEB, 0x4a7c45, 0.35));
 
-// ── Ground plane (satellite imagery applied after load) ───────────────────────
+// ── Ground plane ──────────────────────────────────────────────────────────────
 const groundMat = new THREE.MeshBasicMaterial({ color: 0x8aab7a });
 const ground = new THREE.Mesh(new THREE.PlaneGeometry(800, 800), groundMat);
 ground.rotation.x = -Math.PI / 2;
@@ -165,14 +274,17 @@ controls.minDistance      = 3;
 controls.maxDistance      = 800;
 controls.maxPolarAngle    = Math.PI / 2 - 0.02;
 
-// ── Satellite tile helpers ────────────────────────────────────────────────────
+// ── TransformControls ─────────────────────────────────────────────────────────
+const tc = new TransformControls(camera, renderer.domElement);
+tc.addEventListener('dragging-changed', (e) => { controls.enabled = !e.value; });
+scene.add(tc);
+
+// ── Satellite tiles ───────────────────────────────────────────────────────────
 function latLngToTile(lat, lng, zoom) {
-  const n      = Math.pow(2, zoom);
-  const x      = Math.floor((lng + 180) / 360 * n);
+  const n = Math.pow(2, zoom);
+  const x = Math.floor((lng + 180) / 360 * n);
   const latRad = lat * Math.PI / 180;
-  const y      = Math.floor(
-    (1 - Math.log(Math.tan(latRad) + 1 / Math.cos(latRad)) / Math.PI) / 2 * n
-  );
+  const y = Math.floor((1 - Math.log(Math.tan(latRad) + 1 / Math.cos(latRad)) / Math.PI) / 2 * n);
   return { x, y };
 }
 
@@ -182,17 +294,14 @@ async function loadSatelliteTexture(gridSize = 7) {
   const canvas = document.createElement('canvas');
   canvas.width = dim; canvas.height = dim;
   const ctx = canvas.getContext('2d');
-
   const center = latLngToTile(PROPERTY.lat, PROPERTY.lng, PROPERTY.zoom);
   const half   = Math.floor(gridSize / 2);
-
-  const loads = [];
+  const loads  = [];
   for (let row = 0; row < gridSize; row++) {
     for (let col = 0; col < gridSize; col++) {
       const tx = center.x + (col - half);
       const ty = center.y + (row - half);
       const url = `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${PROPERTY.zoom}/${ty}/${tx}`;
-
       loads.push(new Promise(resolve => {
         const img = new Image();
         img.crossOrigin = 'anonymous';
@@ -202,32 +311,28 @@ async function loadSatelliteTexture(gridSize = 7) {
       }));
     }
   }
-
   const results = await Promise.all(loads);
   if (!results.some(Boolean)) return null;
-
   const tex = new THREE.CanvasTexture(canvas);
   tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
   return tex;
 }
 
-// ── Camera / model state ──────────────────────────────────────────────────────
+// ── Camera state ──────────────────────────────────────────────────────────────
 let defaultPos    = camera.position.clone();
 let defaultTarget = new THREE.Vector3();
-let houseModel    = null;
 
 function fitCameraToModel(model) {
   const box    = new THREE.Box3().setFromObject(model);
   const size   = box.getSize(new THREE.Vector3());
   const center = box.getCenter(new THREE.Vector3());
 
-  // Center on GPS origin, apply calibrated placement offset, seat on ground
   model.position.x -= center.x;
   model.position.z -= center.z;
   model.position.y -= box.min.y;
   model.position.x += 48.19;
   model.position.z += 13.41;
-  model.rotation.y = -115.0 * Math.PI / 180;
+  model.rotation.y  = -115.0 * Math.PI / 180;
 
   box.setFromObject(model);
   box.getCenter(center);
@@ -267,7 +372,7 @@ function fitCameraToModel(model) {
   });
 }
 
-// ── Load model ────────────────────────────────────────────────────────────────
+// ── Load house model ──────────────────────────────────────────────────────────
 const fillEl = document.getElementById('progress-fill');
 const pctEl  = document.getElementById('progress-pct');
 const loadEl = document.getElementById('loading');
@@ -275,12 +380,10 @@ const loadEl = document.getElementById('loading');
 new GLTFLoader().load(
   '../Assets/Renders/HOUSE%20MODEL.glb',
   (gltf) => {
-    houseModel = gltf.scene;
-    houseModel.traverse(node => {
-      if (node.isMesh) { node.castShadow = true; node.receiveShadow = true; }
-    });
-    scene.add(houseModel);
-    fitCameraToModel(houseModel);
+    const model = gltf.scene;
+    model.traverse(n => { if (n.isMesh) { n.castShadow = true; n.receiveShadow = true; } });
+    scene.add(model);
+    fitCameraToModel(model);
     loadEl.classList.add('fade-out');
     setTimeout(() => { loadEl.style.display = 'none'; }, 700);
     setTimeout(() => { document.getElementById('hint').classList.add('hidden'); }, 5000);
@@ -288,26 +391,186 @@ new GLTFLoader().load(
   (xhr) => {
     if (xhr.total) {
       const pct = Math.round((xhr.loaded / xhr.total) * 100);
-      fillEl.style.width = pct + '%';
-      pctEl.textContent  = pct + '%';
+      fillEl.style.width = pct + '%'; pctEl.textContent = pct + '%';
     }
   },
   (err) => { pctEl.textContent = 'Error loading model.'; console.error(err); }
 );
 
-// ── UI ────────────────────────────────────────────────────────────────────────
-document.getElementById('btn-reset').addEventListener('click', () => {
-  camera.position.copy(defaultPos);
-  controls.target.copy(defaultTarget);
-  controls.update();
+// ── Furniture state ───────────────────────────────────────────────────────────
+const furnitureItems = []; // { model, glbFile, name }
+let selectedModel = null;
+
+function selectFurniture(model) {
+  selectedModel = model;
+  tc.attach(model);
+  document.getElementById('furn-controls').style.display = 'flex';
+}
+
+function deselectFurniture() {
+  selectedModel = null;
+  tc.detach();
+  document.getElementById('furn-controls').style.display = 'none';
+}
+
+// ── Add furniture ─────────────────────────────────────────────────────────────
+function addFurniture(item) {
+  new GLTFLoader().load(
+    `../Assets/Furniture/${item.file}`,
+    (gltf) => {
+      const model = gltf.scene;
+      const box = new THREE.Box3().setFromObject(model);
+      // Drop at camera target, seated on ground
+      model.position.set(controls.target.x, -box.min.y, controls.target.z);
+      model.traverse(n => { if (n.isMesh) { n.castShadow = true; n.receiveShadow = true; } });
+      scene.add(model);
+      furnitureItems.push({ model, glbFile: item.file, name: item.name });
+      selectFurniture(model);
+    },
+    undefined,
+    (err) => console.error(`Failed to load ${item.file}:`, err)
+  );
+}
+
+// ── Load manifest & build catalog ─────────────────────────────────────────────
+async function initPanel() {
+  let items = [];
+  try {
+    const res = await fetch('../Assets/Furniture/furniture-manifest.json');
+    if (res.ok) items = (await res.json()).furniture || [];
+  } catch { /* empty */ }
+
+  const catalog = document.getElementById('catalog');
+  if (items.length === 0) {
+    catalog.innerHTML = `<div class="empty-msg">No furniture yet.<br><br>
+      Drop <code style="font-size:.62rem;color:rgba(255,255,255,.45)">.glb</code> files into<br>
+      <code style="font-size:.62rem;color:rgba(255,255,255,.45)">Assets/Furniture/</code><br>
+      and list them in<br>
+      <code style="font-size:.62rem;color:rgba(255,255,255,.45)">furniture-manifest.json</code></div>`;
+    return;
+  }
+  items.forEach(item => {
+    const el = document.createElement('div');
+    el.className = 'furn-item';
+    el.innerHTML = `<span class="furn-name">${item.name}</span><button class="furn-add" title="Add to scene">+</button>`;
+    el.querySelector('.furn-add').addEventListener('click', (e) => { e.stopPropagation(); addFurniture(item); });
+    catalog.appendChild(el);
+  });
+}
+initPanel();
+
+// ── Click to select / deselect furniture ─────────────────────────────────────
+const rc = new THREE.Raycaster();
+const mp = new THREE.Vector2();
+let ptrDown = { x: 0, y: 0 };
+
+renderer.domElement.addEventListener('pointerdown', (e) => { ptrDown = { x: e.clientX, y: e.clientY }; });
+renderer.domElement.addEventListener('pointerup', (e) => {
+  if (Math.hypot(e.clientX - ptrDown.x, e.clientY - ptrDown.y) > 5) return;
+  if (tc.dragging) return;
+
+  mp.x =  (e.clientX / innerWidth)  * 2 - 1;
+  mp.y = -(e.clientY / innerHeight)  * 2 + 1;
+  rc.setFromCamera(mp, camera);
+
+  const meshes = [];
+  furnitureItems.forEach(f => f.model.traverse(n => { if (n.isMesh) meshes.push(n); }));
+  const hits = rc.intersectObjects(meshes, true);
+
+  if (hits.length > 0) {
+    const hit = hits[0].object;
+    const item = furnitureItems.find(f => { let found = false; f.model.traverse(n => { if (n === hit) found = true; }); return found; });
+    if (item) selectFurniture(item.model);
+  } else {
+    deselectFurniture();
+  }
 });
 
+// ── Mode buttons & shortcuts ──────────────────────────────────────────────────
+function setMode(mode) {
+  tc.setMode(mode);
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+}
+document.querySelectorAll('.mode-btn').forEach(b => b.addEventListener('click', () => setMode(b.dataset.mode)));
+
+document.addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'INPUT') return;
+  if      (e.key === 'w' || e.key === 'W') setMode('translate');
+  else if (e.key === 'e' || e.key === 'E') setMode('rotate');
+  else if (e.key === 'r' || e.key === 'R') setMode('scale');
+  else if ((e.key === 'Delete' || e.key === 'Backspace') && selectedModel) {
+    document.getElementById('btn-delete-furn').click(); e.preventDefault();
+  }
+});
+
+// ── Delete ────────────────────────────────────────────────────────────────────
+document.getElementById('btn-delete-furn').addEventListener('click', () => {
+  if (!selectedModel) return;
+  const idx = furnitureItems.findIndex(f => f.model === selectedModel);
+  if (idx !== -1) { scene.remove(selectedModel); furnitureItems.splice(idx, 1); }
+  deselectFurniture();
+});
+
+// ── Save Layout ───────────────────────────────────────────────────────────────
+document.getElementById('btn-save-layout').addEventListener('click', () => {
+  const layout = furnitureItems.map(({ model, glbFile, name }) => ({
+    name, glbFile,
+    position: model.position.toArray(),
+    rotation: [model.rotation.x, model.rotation.y, model.rotation.z],
+    scale: model.scale.toArray()
+  }));
+  const blob = new Blob([JSON.stringify({ layout }, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'seaglass-layout.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+
+// ── Load Layout ───────────────────────────────────────────────────────────────
+document.getElementById('btn-load-layout').addEventListener('click', () => {
+  const input = document.createElement('input');
+  input.type = 'file'; input.accept = '.json';
+  input.onchange = async (e) => {
+    const file = e.target.files[0]; if (!file) return;
+    const { layout = [] } = JSON.parse(await file.text());
+    furnitureItems.forEach(f => scene.remove(f.model));
+    furnitureItems.length = 0;
+    deselectFurniture();
+    for (const item of layout) {
+      await new Promise(resolve => {
+        new GLTFLoader().load(`../Assets/Furniture/${item.glbFile}`, (gltf) => {
+          const model = gltf.scene;
+          model.position.fromArray(item.position);
+          model.rotation.set(item.rotation[0], item.rotation[1], item.rotation[2]);
+          model.scale.fromArray(item.scale);
+          model.traverse(n => { if (n.isMesh) { n.castShadow = true; n.receiveShadow = true; } });
+          scene.add(model);
+          furnitureItems.push({ model, glbFile: item.glbFile, name: item.name });
+          resolve();
+        }, undefined, resolve);
+      });
+    }
+  };
+  input.click();
+});
+
+// ── Panel toggle ──────────────────────────────────────────────────────────────
+const panel = document.getElementById('panel');
+document.getElementById('panel-toggle').addEventListener('click', () => {
+  const c = panel.classList.toggle('collapsed');
+  document.getElementById('panel-toggle').textContent = c ? 'Furniture ▸' : 'Furniture ✕';
+});
+
+// ── View buttons ──────────────────────────────────────────────────────────────
+document.getElementById('btn-reset').addEventListener('click', () => {
+  camera.position.copy(defaultPos); controls.target.copy(defaultTarget); controls.update();
+});
 document.getElementById('btn-top').addEventListener('click', () => {
-  const tgt  = controls.target.clone();
+  const tgt = controls.target.clone();
   const dist = camera.position.distanceTo(tgt) * 1.1;
   camera.position.set(tgt.x, tgt.y + dist, tgt.z + 0.001);
-  controls.target.copy(tgt);
-  controls.update();
+  controls.target.copy(tgt); controls.update();
 });
 
 // ── Resize ────────────────────────────────────────────────────────────────────
