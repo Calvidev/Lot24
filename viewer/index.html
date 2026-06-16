@@ -258,9 +258,42 @@ async function loadSatelliteTexture(gridSize = 5) {
   const results = await Promise.all(loads);
   if (!results.some(Boolean)) return null; // all tiles failed
 
+  // Recolor muted gray ocean → vivid tropical blue
+  colorizeWater(ctx, dim, dim);
+
   const tex = new THREE.CanvasTexture(canvas);
   tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
   return tex;
+}
+
+function colorizeWater(ctx, width, height) {
+  const imgData = ctx.getImageData(0, 0, width, height);
+  const d = imgData.data;
+
+  for (let i = 0; i < d.length; i += 4) {
+    const r = d[i], g = d[i+1], b = d[i+2];
+
+    // Luminance and saturation in [0,1]
+    const lum = (r * 0.299 + g * 0.587 + b * 0.114) / 255;
+    const max = Math.max(r, g, b);
+    const sat = max === 0 ? 0 : (max - Math.min(r, g, b)) / max;
+
+    // Water heuristic:
+    //   - Low saturation  → gray/neutral (not tan sand, not colorful buildings)
+    //   - b >= r - 12     → not warm-toned (sand/land has noticeably more red)
+    //   - Medium lum      → excludes white rooftops and dark shadows
+    const isWater = sat < 0.16 && b >= r - 12 && lum > 0.28 && lum < 0.80;
+
+    if (isWater) {
+      // Blend toward Gulf tropical water (turquoise-teal)
+      const t = 0.70;
+      d[i]   = Math.round(r * (1 - t) + 18  * t); // R → dark
+      d[i+1] = Math.round(g * (1 - t) + 148 * t); // G → medium teal
+      d[i+2] = Math.round(b * (1 - t) + 205 * t); // B → bright blue
+    }
+  }
+
+  ctx.putImageData(imgData, 0, 0);
 }
 
 // ── Camera state ──────────────────────────────────────────────────────────────
