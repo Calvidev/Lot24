@@ -20,105 +20,72 @@
     #loading {
       position: fixed; inset: 0;
       background: #0a1628;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 200;
-      transition: opacity 0.6s ease;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      z-index: 200; transition: opacity 0.6s ease;
     }
     #loading.fade-out { opacity: 0; pointer-events: none; }
-
-    #loading-logo {
-      color: #e8d5b7;
-      font-size: 1.5rem;
-      font-weight: 300;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      margin-bottom: 0.4rem;
-    }
-    #loading-sub {
-      color: rgba(232,213,183,0.45);
-      font-size: 0.7rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      margin-bottom: 2.5rem;
-    }
-    #progress-track {
-      width: 180px; height: 2px;
-      background: rgba(255,255,255,0.12);
-      border-radius: 2px; overflow: hidden;
-    }
-    #progress-fill {
-      height: 100%; width: 0%;
-      background: #e8d5b7;
-      border-radius: 2px;
-      transition: width 0.15s ease;
-    }
-    #progress-pct {
-      color: rgba(255,255,255,0.3);
-      font-size: 0.68rem;
-      letter-spacing: 0.1em;
-      margin-top: 0.9rem;
-    }
+    #loading-logo { color: #e8d5b7; font-size: 1.5rem; font-weight: 300; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 0.4rem; }
+    #loading-sub  { color: rgba(232,213,183,0.45); font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 2.5rem; }
+    #progress-track { width: 180px; height: 2px; background: rgba(255,255,255,0.12); border-radius: 2px; overflow: hidden; }
+    #progress-fill  { height: 100%; width: 0%; background: #e8d5b7; border-radius: 2px; transition: width 0.15s ease; }
+    #progress-pct   { color: rgba(255,255,255,0.3); font-size: 0.68rem; letter-spacing: 0.1em; margin-top: 0.9rem; }
 
     /* ── Back link ── */
-    #back {
-      position: fixed; top: 16px; left: 16px; z-index: 10;
-    }
+    #back { position: fixed; top: 16px; left: 16px; z-index: 10; }
     #back a {
       display: inline-flex; align-items: center; gap: 5px;
-      color: rgba(255,255,255,0.9);
-      text-decoration: none;
+      color: rgba(255,255,255,0.9); text-decoration: none;
       font-size: 0.75rem; letter-spacing: 0.07em;
-      background: rgba(10,22,40,0.65);
-      padding: 8px 14px; border-radius: 6px;
-      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(10,22,40,0.65); padding: 8px 14px;
+      border-radius: 6px; border: 1px solid rgba(255,255,255,0.12);
       backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-      transition: background 0.2s, color 0.2s;
+      transition: background 0.2s;
     }
     #back a:hover { background: rgba(10,22,40,0.9); color: #fff; }
 
     /* ── Bottom control bar ── */
-    #ui {
-      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-      display: flex; gap: 10px; z-index: 10;
-    }
+    #ui { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 10; }
     .btn {
       padding: 10px 22px;
-      background: rgba(10,22,40,0.7);
-      color: #e8d5b7;
-      border: 1px solid rgba(232,213,183,0.25);
-      border-radius: 7px;
+      background: rgba(10,22,40,0.7); color: #e8d5b7;
+      border: 1px solid rgba(232,213,183,0.25); border-radius: 7px;
       font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
-      cursor: pointer;
-      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      cursor: pointer; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
       transition: background 0.2s, border-color 0.2s;
-      -webkit-tap-highlight-color: transparent; user-select: none;
-      white-space: nowrap;
+      -webkit-tap-highlight-color: transparent; user-select: none; white-space: nowrap;
     }
-    .btn:hover, .btn:active {
-      background: rgba(10,22,40,0.95);
-      border-color: rgba(232,213,183,0.6);
-    }
+    .btn:hover, .btn:active { background: rgba(10,22,40,0.95); border-color: rgba(232,213,183,0.6); }
+    .btn.active { background: rgba(232,213,183,0.2); border-color: rgba(232,213,183,0.8); color: #fff; }
 
-    /* ── Interaction hint ── */
+    /* ── Hint / placement info ── */
     #hint {
       position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
       color: rgba(255,255,255,0.55); font-size: 0.68rem; letter-spacing: 0.08em;
-      background: rgba(10,22,40,0.45);
-      padding: 6px 14px; border-radius: 20px;
+      background: rgba(10,22,40,0.45); padding: 6px 14px; border-radius: 20px;
       backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
       pointer-events: none; white-space: nowrap;
       transition: opacity 1s ease; z-index: 10;
     }
     #hint.hidden { opacity: 0; }
 
-    /* ── Satellite attribution ── */
+    /* ── Placement info panel ── */
+    #place-info {
+      position: fixed; top: 56px; left: 50%; transform: translateX(-50%);
+      background: rgba(10,22,40,0.85); color: #e8d5b7;
+      font-size: 0.7rem; letter-spacing: 0.07em;
+      padding: 10px 18px; border-radius: 8px; border: 1px solid rgba(232,213,183,0.3);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      text-align: center; line-height: 1.8; white-space: nowrap;
+      display: none; z-index: 10;
+    }
+    #place-info span { opacity: 0.5; }
+    #place-coords { font-family: monospace; color: #fff; }
+
+    /* ── Attribution ── */
     #attribution {
       position: fixed; bottom: 6px; right: 10px;
-      color: rgba(255,255,255,0.35);
-      font-size: 0.52rem; letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.35); font-size: 0.52rem; letter-spacing: 0.04em;
       z-index: 5; pointer-events: none;
     }
   </style>
@@ -145,9 +112,15 @@
 
 <div id="hint">Drag to orbit &nbsp;·&nbsp; Scroll to zoom &nbsp;·&nbsp; Right-drag to pan</div>
 
+<div id="place-info">
+  <span>PLACEMENT MODE &nbsp;·&nbsp; Click map to place &nbsp;·&nbsp; ↑↓←→ nudge &nbsp;·&nbsp; Q/E rotate &nbsp;·&nbsp; Shift = fine</span><br>
+  <span>offset</span> <span id="place-coords">x=0.00 &nbsp; z=0.00 &nbsp; rot=0.0°</span>
+</div>
+
 <div id="ui">
   <button class="btn" id="btn-reset">Reset View</button>
   <button class="btn" id="btn-top">Top View</button>
+  <button class="btn" id="btn-place">Place House</button>
 </div>
 
 <div id="attribution">Satellite imagery © Esri, Maxar, GeoEye</div>
@@ -157,8 +130,7 @@ import * as THREE from 'three';
 import { GLTFLoader }    from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-// ── Property GPS ──────────────────────────────────────────────────────────────
-// 27°36'32.8"N  97°12'36.2"W  →  Port Aransas / Corpus Christi coast, TX
+// ── Property GPS (center of satellite image = world origin) ───────────────────
 const PROPERTY = { lat: 27.609111, lng: -97.210056, zoom: 17 };
 
 // ── Renderer ──────────────────────────────────────────────────────────────────
@@ -174,7 +146,6 @@ document.body.appendChild(renderer.domElement);
 // ── Scene ─────────────────────────────────────────────────────────────────────
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x87CEEB);
-// no fog — keeps satellite imagery crisp
 
 // ── Camera ────────────────────────────────────────────────────────────────────
 const camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.1, 2000);
@@ -187,22 +158,18 @@ const sun = new THREE.DirectionalLight(0xfff5e0, 2.0);
 sun.position.set(50, 80, 40);
 sun.castShadow = true;
 sun.shadow.mapSize.set(2048, 2048);
-sun.shadow.camera.near   = 1;   sun.shadow.camera.far    = 400;
-sun.shadow.camera.left   = -60; sun.shadow.camera.right  =  60;
-sun.shadow.camera.top    =  60; sun.shadow.camera.bottom = -60;
+sun.shadow.camera.near = 1;   sun.shadow.camera.far    = 400;
+sun.shadow.camera.left = -60; sun.shadow.camera.right  =  60;
+sun.shadow.camera.top  =  60; sun.shadow.camera.bottom = -60;
 sun.shadow.bias = -0.0005;
 scene.add(sun);
 
-const fill = new THREE.DirectionalLight(0x8bb8e8, 0.5);
-fill.position.set(-30, 25, -30);
-scene.add(fill);
-
+scene.add(new THREE.DirectionalLight(0x8bb8e8, 0.5)).position.set(-30, 25, -30);
 scene.add(new THREE.HemisphereLight(0x87CEEB, 0x4a7c45, 0.35));
 
-// ── Ground plane ──────────────────────────────────────────────────────────────
-// Unlit material so satellite texture renders at true colors (no lighting wash)
-const groundMat = new THREE.MeshBasicMaterial({ color: 0x4a8045 });
-const ground = new THREE.Mesh(new THREE.PlaneGeometry(400, 400), groundMat);
+// ── Ground plane (satellite imagery applied after load) ───────────────────────
+const groundMat = new THREE.MeshBasicMaterial({ color: 0x8aab7a });
+const ground = new THREE.Mesh(new THREE.PlaneGeometry(800, 800), groundMat);
 ground.rotation.x = -Math.PI / 2;
 ground.receiveShadow = true;
 scene.add(ground);
@@ -213,7 +180,7 @@ controls.enableDamping    = true;
 controls.dampingFactor    = 0.06;
 controls.screenSpacePanning = false;
 controls.minDistance      = 3;
-controls.maxDistance      = 400;
+controls.maxDistance      = 800;
 controls.maxPolarAngle    = Math.PI / 2 - 0.02;
 
 // ── Satellite tile helpers ────────────────────────────────────────────────────
@@ -227,7 +194,7 @@ function latLngToTile(lat, lng, zoom) {
   return { x, y };
 }
 
-async function loadSatelliteTexture(gridSize = 5) {
+async function loadSatelliteTexture(gridSize = 7) {
   const TILE_PX = 256;
   const dim = TILE_PX * gridSize;
   const canvas = document.createElement('canvas');
@@ -242,7 +209,6 @@ async function loadSatelliteTexture(gridSize = 5) {
     for (let col = 0; col < gridSize; col++) {
       const tx = center.x + (col - half);
       const ty = center.y + (row - half);
-      // ESRI World Imagery — CORS enabled, no API key required
       const url = `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${PROPERTY.zoom}/${ty}/${tx}`;
 
       loads.push(new Promise(resolve => {
@@ -256,61 +222,28 @@ async function loadSatelliteTexture(gridSize = 5) {
   }
 
   const results = await Promise.all(loads);
-  if (!results.some(Boolean)) return null; // all tiles failed
-
-  // Recolor muted gray ocean → vivid tropical blue
-  colorizeWater(ctx, dim, dim);
+  if (!results.some(Boolean)) return null;
 
   const tex = new THREE.CanvasTexture(canvas);
   tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
   return tex;
 }
 
-function colorizeWater(ctx, width, height) {
-  const imgData = ctx.getImageData(0, 0, width, height);
-  const d = imgData.data;
-
-  for (let i = 0; i < d.length; i += 4) {
-    const r = d[i], g = d[i+1], b = d[i+2];
-
-    // Luminance and saturation in [0,1]
-    const lum = (r * 0.299 + g * 0.587 + b * 0.114) / 255;
-    const max = Math.max(r, g, b);
-    const sat = max === 0 ? 0 : (max - Math.min(r, g, b)) / max;
-
-    // Water heuristic:
-    //   - Low saturation  → gray/neutral (not tan sand, not colorful buildings)
-    //   - b >= r - 12     → not warm-toned (sand/land has noticeably more red)
-    //   - Medium lum      → excludes white rooftops and dark shadows
-    const isWater = sat < 0.16 && b >= r - 12 && lum > 0.28 && lum < 0.80;
-
-    if (isWater) {
-      // Blend toward Gulf tropical water (turquoise-teal)
-      const t = 0.70;
-      d[i]   = Math.round(r * (1 - t) + 18  * t); // R → dark
-      d[i+1] = Math.round(g * (1 - t) + 148 * t); // G → medium teal
-      d[i+2] = Math.round(b * (1 - t) + 205 * t); // B → bright blue
-    }
-  }
-
-  ctx.putImageData(imgData, 0, 0);
-}
-
-// ── Camera state ──────────────────────────────────────────────────────────────
+// ── Camera / model state ──────────────────────────────────────────────────────
 let defaultPos    = camera.position.clone();
 let defaultTarget = new THREE.Vector3();
+let houseModel    = null;
 
 function fitCameraToModel(model) {
-  const box  = new THREE.Box3().setFromObject(model);
-  const size = box.getSize(new THREE.Vector3());
+  const box    = new THREE.Box3().setFromObject(model);
+  const size   = box.getSize(new THREE.Vector3());
   const center = box.getCenter(new THREE.Vector3());
 
-  // Center model on satellite image (XZ) and seat it on ground (Y)
+  // Center model on satellite image (XZ) and seat on ground (Y)
   model.position.x -= center.x;
   model.position.y -= box.min.y;
   model.position.z -= center.z;
 
-  // Recompute after repositioning
   box.setFromObject(model);
   box.getCenter(center);
   box.getSize(size);
@@ -319,9 +252,7 @@ function fitCameraToModel(model) {
   const fov    = camera.fov * (Math.PI / 180);
   const dist   = ((maxDim / 2) / Math.tan(fov / 2)) * 2.0;
 
-  // 30° elevation, 45° azimuth
-  const phi   = Math.PI / 6;
-  const theta = Math.PI / 4;
+  const phi = Math.PI / 6, theta = Math.PI / 4;
   camera.position.set(
     center.x + dist * Math.sin(phi) * Math.cos(theta),
     center.y + dist * Math.cos(phi) * 0.9,
@@ -331,50 +262,40 @@ function fitCameraToModel(model) {
   controls.target.copy(center);
   controls.update();
 
-  // Expand shadow frustum to model size
   const h = maxDim * 0.8;
-  sun.shadow.camera.left   = -h; sun.shadow.camera.right  =  h;
-  sun.shadow.camera.top    =  h; sun.shadow.camera.bottom = -h;
-  sun.shadow.camera.far    = dist * 5;
+  sun.shadow.camera.left = -h; sun.shadow.camera.right  =  h;
+  sun.shadow.camera.top  =  h; sun.shadow.camera.bottom = -h;
+  sun.shadow.camera.far  = dist * 5;
   sun.shadow.camera.updateProjectionMatrix();
 
-  // Resize ground to cover the satellite image area (~30× model footprint)
-  const groundExtent = Math.max(maxDim * 80, 800);
   ground.geometry.dispose();
-  ground.geometry = new THREE.PlaneGeometry(groundExtent, groundExtent);
+  ground.geometry = new THREE.PlaneGeometry(maxDim * 80, maxDim * 80);
 
-  // Store reset state
   defaultPos    = camera.position.clone();
   defaultTarget = center.clone();
 
-  // Async load satellite tiles and apply as ground texture
   loadSatelliteTexture(7).then(tex => {
-    if (!tex) return; // stay green on failure
+    if (!tex) return;
     groundMat.map = tex;
-    groundMat.color.setHex(0xffffff); // let the texture show true colors
+    groundMat.color.setHex(0xffffff);
     groundMat.needsUpdate = true;
   });
 }
 
-// ── Load the 3D model ─────────────────────────────────────────────────────────
-const fillEl   = document.getElementById('progress-fill');
-const pctEl    = document.getElementById('progress-pct');
-const loadEl   = document.getElementById('loading');
+// ── Load model ────────────────────────────────────────────────────────────────
+const fillEl = document.getElementById('progress-fill');
+const pctEl  = document.getElementById('progress-pct');
+const loadEl = document.getElementById('loading');
 
-const loader = new GLTFLoader();
-loader.load(
+new GLTFLoader().load(
   '../Assets/Renders/HOUSE%20MODEL.glb',
   (gltf) => {
-    const model = gltf.scene;
-    model.traverse(node => {
-      if (node.isMesh) {
-        node.castShadow    = true;
-        node.receiveShadow = true;
-      }
+    houseModel = gltf.scene;
+    houseModel.traverse(node => {
+      if (node.isMesh) { node.castShadow = true; node.receiveShadow = true; }
     });
-    scene.add(model);
-    fitCameraToModel(model);
-
+    scene.add(houseModel);
+    fitCameraToModel(houseModel);
     loadEl.classList.add('fade-out');
     setTimeout(() => { loadEl.style.display = 'none'; }, 700);
     setTimeout(() => { document.getElementById('hint').classList.add('hidden'); }, 5000);
@@ -386,13 +307,64 @@ loader.load(
       pctEl.textContent  = pct + '%';
     }
   },
-  (err) => {
-    pctEl.textContent = 'Error loading model.';
-    console.error('[3D Viewer] GLTFLoader error:', err);
-  }
+  (err) => { pctEl.textContent = 'Error loading model.'; console.error(err); }
 );
 
-// ── UI buttons ────────────────────────────────────────────────────────────────
+// ── Placement mode ────────────────────────────────────────────────────────────
+let placementMode = false;
+const raycaster   = new THREE.Raycaster();
+const mouse2d     = new THREE.Vector2();
+const groundPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
+const placeInfo   = document.getElementById('place-info');
+const placeCoords = document.getElementById('place-coords');
+
+function updatePlaceCoords() {
+  if (!houseModel) return;
+  const x   = houseModel.position.x.toFixed(2);
+  const z   = houseModel.position.z.toFixed(2);
+  const rot = (houseModel.rotation.y * 180 / Math.PI).toFixed(1);
+  placeCoords.textContent = `x=${x}  z=${z}  rot=${rot}°`;
+}
+
+document.getElementById('btn-place').addEventListener('click', () => {
+  placementMode = !placementMode;
+  document.getElementById('btn-place').classList.toggle('active', placementMode);
+  placeInfo.style.display = placementMode ? 'block' : 'none';
+  controls.enabled = !placementMode;
+  if (placementMode) updatePlaceCoords();
+});
+
+// Click on ground to place house
+renderer.domElement.addEventListener('click', (e) => {
+  if (!placementMode || !houseModel) return;
+  mouse2d.x = (e.clientX / innerWidth)  *  2 - 1;
+  mouse2d.y = (e.clientY / innerHeight) * -2 + 1;
+  raycaster.setFromCamera(mouse2d, camera);
+  const hit = new THREE.Vector3();
+  if (raycaster.ray.intersectPlane(groundPlane, hit)) {
+    houseModel.position.x = hit.x;
+    houseModel.position.z = hit.z;
+    updatePlaceCoords();
+  }
+});
+
+// Arrow keys to nudge, Q/E to rotate
+document.addEventListener('keydown', (e) => {
+  if (!placementMode || !houseModel) return;
+  const step = e.shiftKey ? 0.2 : 2;
+  const rStep = e.shiftKey ? 1 : 5;
+  let used = true;
+  if (e.key === 'ArrowLeft')  houseModel.position.x -= step;
+  else if (e.key === 'ArrowRight') houseModel.position.x += step;
+  else if (e.key === 'ArrowUp')    houseModel.position.z -= step;
+  else if (e.key === 'ArrowDown')  houseModel.position.z += step;
+  else if (e.key === 'q' || e.key === 'Q') houseModel.rotation.y -= rStep * Math.PI / 180;
+  else if (e.key === 'e' || e.key === 'E') houseModel.rotation.y += rStep * Math.PI / 180;
+  else used = false;
+  if (used) { e.preventDefault(); updatePlaceCoords(); }
+});
+
+// ── Standard UI ───────────────────────────────────────────────────────────────
 document.getElementById('btn-reset').addEventListener('click', () => {
   camera.position.copy(defaultPos);
   controls.target.copy(defaultTarget);
